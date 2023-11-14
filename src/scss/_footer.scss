@@ -1,0 +1,132 @@
+.footer-top-top-content
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    padding-top: 35px;
+    padding-bottom: 35px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    background-color: $blue-2;
+
+    @media (max-width: 768px) 
+    {
+        flex-direction: column;    
+    }
+}
+
+.footer-top-uat
+{
+    height: auto;
+    width: 180px;
+}
+
+.footer-top-slogan
+{
+    height: auto;
+    width: 200px;
+}
+
+.footer-top-social
+{
+    display: flex;
+    justify-content: space-around;
+
+    margin-top: 15px;
+
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-top-social-img-container
+{
+    padding: 7px;
+    
+    &:hover
+    {
+        transition: 110ms ease-in;
+        border-radius: 4px;
+        cursor: pointer;
+        color: white;
+        background-color: $blue-1;
+    }
+}
+
+.footer-top-social-img
+{
+    height: auto;
+    width: 35px;
+}
+
+.footer-top-redirects
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    max-width: 500px;
+
+    padding: 10px;
+
+    border-radius: 4px;
+
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+
+    @media (max-width:768px) 
+    {
+        margin-top: 20px;
+        margin-bottom: 20px;    
+    }
+}
+
+.footer-top-redirects-button-container
+{
+    padding: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    border-radius: 4px;    
+
+    &:hover
+    {
+        transition: 110ms ease-in;
+        background-color: $blue-1;
+        color: white;
+    }
+}
+
+.footer-bottom
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    color: white;
+    font-size: 13.5px;
+
+    text-align: center;
+
+    width: 100%;
+    height: fit-content;
+
+    background-color: $blue-1;
+
+    a
+    {
+        color: rgba(255, 255, 255, 0.6);
+
+        &:hover
+        {
+            color: white;
+            transition: 110ms ease-in;
+        }
+    }
+}

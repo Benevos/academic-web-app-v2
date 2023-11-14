@@ -1,0 +1,41 @@
+.navbar
+{
+    padding-top: 0px;
+    background-color: $blue-1;
+    height: $navbar-heigth;
+}
+
+.navListItem
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    height: 100%;
+    padding-bottom: 5px;
+    padding-right: 7px;
+    padding-left: 7px;
+    
+
+    @media (max-width: 600px)
+    {
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 13px;
+    }
+
+    @media (max-width: 380px)
+    {
+        font-size: 11px;
+    }
+
+    &:hover
+    {
+        color: $auxiliar-5;
+        font-weight: 900;
+        transform: translateY(5px);
+        transition: 200ms ease-in;
+        cursor: pointer;
+    }
+}

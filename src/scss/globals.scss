@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'variables';
+@import 'resets';
+@import 'loading';
+@import 'header';
+@import 'navbar';
+@import 'footer';
+
+.filler
+{
+    height: $filler-height;
+    width: 100%;
+}

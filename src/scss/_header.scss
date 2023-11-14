@@ -1,0 +1,72 @@
+.header
+{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.headerIcon
+{
+    padding: 10px;
+
+    color: $gray-2;
+
+    @media (max-width: 900px)
+    {
+        padding: 5px;
+    }
+
+    &:hover
+    {
+        color: $blue-1;
+
+        cursor: pointer;
+    }
+}
+
+.headerSearchButton
+{
+    height: 35px;
+    width: 35px;
+
+    background-color: $blue-1;
+    color: white;
+
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+    @media (max-width: 900px)
+    {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+    &:hover
+    {
+        transition: 150ms ease-in;
+        background-color: $orange-1;
+    }
+}
+
+.headerSearchInput
+{
+    height: $header-height;
+    width: 400px;
+
+    border: 2px solid $blue-1;
+    border-right: 0px;
+    border-radius: 8px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding: 5px;
+
+    @media (max-width: 900px)
+    {
+        display: none;
+    }
+
+    &:focus
+    {
+        border: 2px solid $auxiliar-5;
+        outline: 0;
+    }
+}

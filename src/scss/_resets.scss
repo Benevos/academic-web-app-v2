@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Figtree');
+
+html, body, :root
+{
+  height: 100%;
+  background-color: $gray-1;
+  //font-family: 'Figtree';
+  background-image: url('/Textura1.png');
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    font-weight: 500;
+}
+
+h1 {font-size: 2em;}
+
+h2 {font-size: 1.5em;}
+
+h3 {font-size: 1.17em;}
+
+h4 {font-size: 1em;}
+
+h5 {font-size: .83em;}
+
+h6 {font-size: .67em;}
+
+label
+{
+  pointer-events: none;
+}
+
+address
+{
+  font-style: normal;
+}

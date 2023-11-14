@@ -1,0 +1,17 @@
+.loading
+{
+    background-color: rgba(29, 37, 45, 0.85);
+    width: 100dvw;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-message
+{
+    color: $auxiliar-5;
+    margin-bottom: 10px;
+}
