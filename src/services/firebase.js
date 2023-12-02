@@ -5,13 +5,14 @@ import { getFirestore, collection, addDoc, getDoc, getDocs, where, query, onSnap
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB9njL5lHQErbvpsd8jsIM-A2paX0Nn2Rk",
-  authDomain: "fmvz-store.firebaseapp.com",
-  projectId: "fmvz-store",
-  storageBucket: "fmvz-store.appspot.com",
-  messagingSenderId: "903553352633",
-  appId: "1:903553352633:web:ec845045b74df1996b6c68"
+  apiKey: "AIzaSyB5sflNAyug7Kuv9ytY0hPE6E4FA3Zo4lE",
+  authDomain: "academic-web-a.firebaseapp.com",
+  projectId: "academic-web-a",
+  storageBucket: "academic-web-a.appspot.com",
+  messagingSenderId: "512843967914",
+  appId: "1:512843967914:web:5d0b60ea9852880d194fd3"
 };
+
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
@@ -72,14 +73,15 @@ export const updateDocument = async (collectionName, id, newFields) =>
 
 //! CUSTOM QUERIES
 
-export async function registerUser(email, institutionName, password, scholarKey)
+export async function registerUser(email, institutionName, password, scholarKey, academicLevel)
 {
   await addDoc(collection(db, "institutions"), 
   {
     email: email, 
     institutionName: institutionName, 
     password: password,
-    scholarKey: scholarKey
+    scholarKey: scholarKey,
+    academicLevel: academicLevel
   });
 }
 

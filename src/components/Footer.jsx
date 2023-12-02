@@ -4,7 +4,7 @@ import FooterBottom from './FooterBottom';
 
 function Footer() {
   return (
-    <footer className='w-full h-fit mt-5'>
+    <footer className='w-full h-fit'>
         <FooterTop/>
         <FooterBottom/>
     </footer>

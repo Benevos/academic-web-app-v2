@@ -22,6 +22,25 @@
     }
 }
 
+.headerIconLogOut
+{
+    padding: 10px;
+
+    color: red;
+
+    @media (max-width: 900px)
+    {
+        padding: 5px;
+    }
+
+    &:hover
+    {
+        color: rgb(255, 148, 148);
+
+        cursor: pointer;
+    }
+}
+
 .headerSearchButton
 {
     height: 35px;

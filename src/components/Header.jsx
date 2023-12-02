@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React,  { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaEarthAmericas } from 'react-icons/fa6';
@@ -8,14 +8,30 @@ import { FaUserCircle } from 'react-icons/fa';
 import { RiBillFill } from 'react-icons/ri';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { LuMail } from 'react-icons/lu';
-import { IoMdSchool } from 'react-icons/io';
+//import { IoMdSchool } from 'react-icons/io';
 import { AiFillHome } from 'react-icons/ai';
-import { useAuth } from '@/contexts/AuthContext';
+import { IoLogIn, IoLogOut } from "react-icons/io5";
+import { useRouter } from 'next/navigation';
+import { MdDashboard } from "react-icons/md";
 
 
 function Header() 
 {
-    const { user } = useAuth();
+    const [user, setUser] = useState(null);
+    const router = useRouter();
+
+    const handleLogOut = () =>
+    {
+        localStorage.removeItem('sessionData');
+        setUser(null);
+        router.push('/');
+    }
+
+    useEffect(() =>
+    {
+        setUser(JSON.parse(localStorage.getItem('sessionData')));
+    }, []);
+    
     const iconSize = 18;
 
     return (
@@ -61,11 +77,35 @@ function Header()
                     </div>
                  </Link>*/}
 
-                <Link href={!user ? '/login' : '/user/'+user.email}>
-                    <div className='headerIcon'>
-                        <FaUserCircle size={iconSize}/>
-                    </div>
-                </Link>
+                 {!user ? 
+                    <Link href={!user ? '/login' : '/user/'+user.scholarKey}>
+                        <div className='headerIcon'>
+                            <IoLogIn size={iconSize}/>
+                        </div>
+                    </Link>
+                    :
+                    <>
+                        <Link href={'/dashboard'}>
+                            <div className='headerIcon'>
+                                <MdDashboard size={iconSize}/>
+                            </div>
+                        </Link>
+
+                        <Link href={!user ? '/login' : '/user/'+user.scholarKey}>
+                            <div className='headerIcon'>
+                                <FaUserCircle size={iconSize}/>
+                            </div>
+                        </Link>
+
+                    
+                        <div onClick={handleLogOut} className='headerIconLogOut'>
+                            <IoLogOut size={iconSize}/>
+                        </div>
+                        
+                    </>
+                }
+
+                
             </div>
         </div>
     )
