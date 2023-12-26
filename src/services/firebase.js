@@ -5,12 +5,12 @@ import { getFirestore, collection, addDoc, getDoc, getDocs, where, query, onSnap
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB5sflNAyug7Kuv9ytY0hPE6E4FA3Zo4lE",
-  authDomain: "academic-web-a.firebaseapp.com",
-  projectId: "academic-web-a",
-  storageBucket: "academic-web-a.appspot.com",
-  messagingSenderId: "512843967914",
-  appId: "1:512843967914:web:5d0b60ea9852880d194fd3"
+  apiKey: "AIzaSyDt4uluKprciv23WqsW4JS8od2NO5BKlV8",
+  authDomain: "academic-platform.firebaseapp.com",
+  projectId: "academic-platform",
+  storageBucket: "academic-platform.appspot.com",
+  messagingSenderId: "787137987014",
+  appId: "1:787137987014:web:d3d912b55102e9c89d32c7"
 };
 
 
@@ -85,7 +85,7 @@ export async function registerUser(email, institutionName, password, scholarKey,
   });
 }
 
-export async function createNewProblem(scholarKey, title, paragraph, category, answers, solution)
+export async function createNewProblem(scholarKey, title, paragraph, category, subcategory, difficulty, academicLevel, answers, solution)
 {
   await addDoc(collection(db, "problems"), 
   {
@@ -93,9 +93,41 @@ export async function createNewProblem(scholarKey, title, paragraph, category, a
     title: title,
     paragraph: paragraph,
     category: category,
+    subcategory: subcategory,
+    difficulty: difficulty,
+    academicLevel: academicLevel,
     answers: answers,
     solution: solution
   })
+}
+
+export async function createNewCategory(name, subcategories, scholarKey)
+{
+  await addDoc(collection(db, 'categories'), 
+  {
+    name: name,
+    subcategories: subcategories,
+    scholarKey: scholarKey,
+  })
+}
+
+export async function getOneQueryCollection(collectionName, attribute, operator, value)
+{
+  const collectionRef = collection(db, collectionName);
+  const querySnapshot =  query(collectionRef, where(attribute, operator, value));
+  const docs = await getDocs(querySnapshot);
+
+  const data = docs.docs.map(doc => 
+    {
+      const documentContent = doc.data();
+      const documentId = doc.id;
+
+      const newData = { id: documentId, ...documentContent };
+
+      return newData;
+    });
+
+  return data;
 }
 
 export async function getTwoQueryCollection(collectionName, attributes, operators, values)

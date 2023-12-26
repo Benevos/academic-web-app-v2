@@ -92,10 +92,10 @@ function Login()
             <div className='login-container'>
             <form onSubmit={handleSumbit} className='login-form'>
                 <label>Clave escolar:</label>
-                <input onChange={handleChange} type='text' name='scholarKey' placeholder='Clave escolar'/>
+                <input className='login-text-input uppercase' onChange={handleChange} type='text' name='scholarKey' placeholder='Clave escolar'/>
 
                 <label>Contraseña:</label>
-                <input onChange={handleChange} type='password' name='password' placeholder='Contraseña'/>
+                <input className='login-text-input' onChange={handleChange} type='password' name='password' placeholder='Contraseña'/>
                 
                 <div className='flex items-center justify-center mt-2'>
                 <Link href={'/register'} className='text-blue-600 hover:text-blue-800 text-center visited:text-purple-600'>¿No tiene cuenta? Cree una</Link>

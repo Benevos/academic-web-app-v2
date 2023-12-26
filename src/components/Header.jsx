@@ -1,6 +1,6 @@
 'use client';
 
-import React,  { useState, useEffect } from 'react';
+import React,  { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaEarthAmericas } from 'react-icons/fa6';
@@ -76,35 +76,36 @@ function Header()
                         <IoMdSchool size={iconSize}/>
                     </div>
                  </Link>*/}
-
-                 {!user ? 
-                    <Link href={!user ? '/login' : '/user/'+user.scholarKey}>
-                        <div className='headerIcon'>
-                            <IoLogIn size={iconSize}/>
-                        </div>
-                    </Link>
-                    :
-                    <>
-                        <Link href={'/dashboard'}>
-                            <div className='headerIcon'>
-                                <MdDashboard size={iconSize}/>
-                            </div>
-                        </Link>
-
+                
+                <Suspense fallback={<></>}>
+                    {!user ? 
                         <Link href={!user ? '/login' : '/user/'+user.scholarKey}>
                             <div className='headerIcon'>
-                                <FaUserCircle size={iconSize}/>
+                                <IoLogIn size={iconSize}/>
                             </div>
                         </Link>
+                        :
+                        <>
+                            <Link href={'/dashboard'}>
+                                <div className='headerIcon'>
+                                    <MdDashboard size={iconSize}/>
+                                </div>
+                            </Link>
 
-                    
-                        <div onClick={handleLogOut} className='headerIconLogOut'>
-                            <IoLogOut size={iconSize}/>
-                        </div>
+                            <Link href={!user ? '/login' : '/user/'+user.scholarKey}>
+                                <div className='headerIcon'>
+                                    <FaUserCircle size={iconSize}/>
+                                </div>
+                            </Link>
+
                         
-                    </>
-                }
-
+                            <div onClick={handleLogOut} className='headerIconLogOut'>
+                                <IoLogOut size={iconSize}/>
+                            </div>
+                            
+                        </>
+                    }
+                </Suspense>
                 
             </div>
         </div>

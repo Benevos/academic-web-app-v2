@@ -8,7 +8,7 @@
 
 .login-form
 {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: $shadow-1;
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -35,7 +35,7 @@
         }
     }
 
-    input
+    .login-text-input
     {
         outline: none;
         width: 100%;

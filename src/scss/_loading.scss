@@ -1,7 +1,7 @@
 .loading
 {
     background-color: rgba(29, 37, 45, 0.85);
-    width: 100dvw;
+    width: 100%;
     min-height: 100dvh;    
 
     display: flex;
@@ -13,5 +13,6 @@
 .loading-message
 {
     color: $auxiliar-5;
+    text-align: center;
     margin-bottom: 10px;
 }

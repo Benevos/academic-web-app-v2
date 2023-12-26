@@ -18,7 +18,7 @@ function Dialog({ title='Dialog', message='Lorem ipsum', disabled=false, showBut
             <div className='dialog-content'>
                 <h2>{title}</h2>
 
-                <p>{message}</p>
+                <p className='text-center'>{message}</p>
 
                 {showButton ? <button className='' onClick={handleCloseClick} disabled={disabled}>Cerrar</button> : <></>}
             </div>

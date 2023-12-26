@@ -5,7 +5,7 @@
     max-width: 600px;
     background-color: rgba(0, 0, 0, 0);
     border-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: $shadow-1;
 }
 
 .dialog-primary
@@ -38,7 +38,7 @@
 
 .dialog-error
 {
-    background-color: rgb(255, 103, 103);
+    background-color: $red-3;
     color: white;
 
     h2
@@ -49,12 +49,12 @@
     button
     {
         color: white;
-        background-color: rgb(212, 0, 0);
+        background-color: $red-2;
 
         &:hover
         {
             transition: 150ms ease-in; 
-            background-color: rgb(255, 168, 168);
+            background-color: $red-4;
         }
     }
 

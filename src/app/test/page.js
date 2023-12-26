@@ -4,9 +4,30 @@ import Header from '@/components/Header';
 import Navbar from '@/components/Navbar';
 import ProtectedRoute from '@/components/ProtectedRoute'
 import TopFiller from '@/components/TopFiller';
-import React from 'react'
+import { getCollection } from '@/services/firebase';
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
+import React, { useEffect, useState } from 'react'
 
-function Test() {
+function Test() 
+{
+  const [info, setInfo] = useState([{paragraph: ''}]);
+  const [data, setData] = useState('');
+
+  const getThingsReady = async () =>
+  {
+    const problems = await getCollection('problems');
+    setInfo(problems);
+  }
+
+  const handleChange = ({ target : { value }}) =>
+  {
+    setData(value)
+  }
+
+  useEffect(() => {
+    getThingsReady();
+  }, [])
+
   return (
     <div>
 
@@ -14,9 +35,16 @@ function Test() {
       <TopFiller/>
       <Navbar/>
 
-      Test
+      <input onChange={handleChange}></input>
+
+      <MathJaxContext>
+        <MathJax>
+          {data}
+        </MathJax>
+      </MathJaxContext>
+     
     </div>
   )
 }
 
-export default ProtectedRoute(Test);
+export default Test;

@@ -15,7 +15,7 @@ function Navbar() {
                 <Link href={'/#'}>🎒 Campus</Link>
             </li>
             <li className='navListItem'>
-                <Link href={'/#'}>🔬 Investigación</Link>
+                <Link href={'/#'}>❔ FAQ</Link>
             </li>
         </ul>
     </nav>

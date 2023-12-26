@@ -1,0 +1,269 @@
+.create-problem
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    min-height: calc(100dvh - 137px);
+}
+
+.create-problem-info
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    background-color: $blue-2;
+    border-radius: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    color: white;
+    text-align: center;
+
+    svg
+    {
+        display: inline;
+        color: $auxiliar-5;
+    }
+
+    @media (max-width: 788px)
+    {
+        width: 100%;
+        font-size: small;
+    }
+}
+
+.create-problem-content
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 80%;
+
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    background-color: white;
+    box-shadow: $shadow-1;
+
+    @media (max-width: 788px)
+    {
+        width: 100%;
+    }
+}
+
+.create-problem-input, .create-problem-textarea
+{
+    outline: none;
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid $blue-1;
+
+    &:focus
+    {
+        border: 2px solid $auxiliar-5;
+    }
+}
+
+.create-problem-input-error, .create-problem-textarea-error
+{
+    outline: none;
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid red;
+    color: red;
+
+    &:focus
+    {
+        border: 2px solid rgb(250, 133, 153);
+    }
+}
+
+.create-problem-select
+{   
+    border: 2px solid $blue-1;
+    padding: 5px;
+    border-radius: 8px;
+
+    &:focus
+    {
+        border: 2px solid $auxiliar-5;
+    }
+
+    @media (max-width: 990px) 
+    {
+        width: 100%;    
+    }
+    
+}
+
+.create-problem-select-error
+{   
+    border: 2px solid red;
+    padding: 5px;
+    border-radius: 8px;
+    color: red;
+
+    &:focus
+    {
+        border: 2px solid rgb(250, 133, 153);
+    }
+
+    @media (max-width: 990px) 
+    {
+        width: 100%;    
+    }
+    
+}
+
+.create-problem-selects
+{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    width: 100%;
+
+    @media (max-width: 990px)
+    {
+        flex-direction: column;
+    }
+}   
+
+.cp-select-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-problem-answer-container
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    width: 100%;
+
+    @media (max-width: 768px) 
+    {
+        flex-direction: column;    
+    }
+}
+
+.create-problem-answer
+{
+    outline: none;
+    width: 49.8%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid $blue-1;
+
+    &:focus
+    {
+        border: 2px solid $auxiliar-5;
+    }
+
+    @media (max-width: 768px) 
+    {
+        width: 100%;    
+    }
+}
+
+.create-problem-answer-error
+{
+    outline: none;
+    width: 49.8%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid red;
+    color: red;
+
+    &:focus
+    {
+        border: 2px solid rgb(250, 133, 153);
+    }
+
+    @media (max-width: 768px) 
+    {
+        width: 100%;    
+    }
+}
+
+.create-problem-answer-prev
+{
+    width: 49.8%;
+    padding: 5px;
+    text-align: justify;
+    background-color: $blue-5;
+    white-space: pre-wrap;
+
+    @media (max-width: 768px) 
+    {
+        margin-top: 5px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+}
+
+.create-problem-answer-prev-title
+{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid #a8a8a8;
+}
+
+.create-problem-submit-button
+{
+    width: 100%;
+    margin-top: 10px;
+    background-color: $blue-1;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+
+    &:hover
+    {
+        transition: 150ms ease-in;
+        background-color: $orange-1;
+    }
+}
+
+.insert-latex
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+
+    width: 120px;
+    height: 120px;
+
+    bottom: 15px;
+    right: 15px;
+
+    border-radius: 9999px;
+    background-color: $blue-2;
+    color: white;
+    
+    box-shadow: $shadow-20;
+
+    cursor: pointer;
+
+    &:hover
+    {
+        transition: ease-in 150ms;
+        background-color: $blue-3;
+    }
+}

@@ -4,26 +4,52 @@ import Header from '@/components/Header'
 import Navbar from '@/components/Navbar'
 import TopFiller from '@/components/TopFiller'
 import Link from 'next/link'
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import NoAuthUserRoute from '@/components/NoAuthUserRoute';
 import Dialog from '@/components/Dialog';
 import { getCollection, registerUser } from '@/services/firebase';
 
 function Register() 
 {
-    const [userData, setUserData] = useState({scholarKey: '', email: '', password: '', confirmedPassword: '', institutionName: '', academicLevel: 'college'});
+    const [userData, setUserData] = useState({
+            scholarKey: '', 
+            email: '', 
+            password: '', 
+            confirmedPassword: '', 
+            institutionName: '', 
+            academicLevel: [null, null, null, null]
+        });
+
+    const [academicLevel, setAcademicLevel] = useState([null, null, null, null]);
     const [dialogConfig, setDialogConfig] = useState({title: '', message: '', showButton: true, color: 'primary', disabled: false});
-    const router = useRouter();
 
     const handleChange = ({ target: { name, value } }) =>
     {
         setUserData({...userData, [name]: value});
     }
 
+    const handleCheckboxChange = ({ target: { checked, value }}) =>
+    {
+        const tempLevel = [...academicLevel];
+
+        const index = value === 'college' ? 0 : value === 'high' ? 1 : value === 'middle' ? 2 : value === 'elementary' ? 3 : undefined;
+
+        if(!checked)
+        {
+            tempLevel[index] = null;
+            setAcademicLevel(tempLevel);
+            return;
+        }
+
+        tempLevel[index] = value;
+        setAcademicLevel(tempLevel);
+    }  
+
     const handleSumbit = async (e) =>
     {
         e.preventDefault();
+
+        
 
         const inputs = document.getElementsByTagName('input');
         const dialog = document.getElementById('dialog');
@@ -46,6 +72,18 @@ function Register()
 
         if(error)
         {
+            dialog.showModal();
+            return;
+        }
+
+        let nullCount = 0;
+        academicLevel.forEach(level => {
+            if(level === null) nullCount++;
+        })
+
+        if(nullCount >= 4)
+        {
+            setDialogConfig({title: 'Error', message: 'Seleccione al menos una categoria', color: 'error'})
             dialog.showModal();
             return;
         }
@@ -87,6 +125,11 @@ function Register()
         }
     }
 
+    useEffect(() =>
+    {
+        setUserData({...userData, academicLevel: academicLevel})
+    }, [academicLevel])
+
   return (
     <div>
         <Dialog 
@@ -103,31 +146,40 @@ function Register()
         <div className='login-container'>
             <form onSubmit={handleSumbit} className='login-form'>
                 <label>Clave escolar:</label>
-                <input onChange={handleChange} type='text' name='scholarKey' placeholder='Clave escolar'/>
+                <input className='login-text-input uppercase' onChange={handleChange} type='text' name='scholarKey' placeholder='Clave escolar'/>
 
                 <label>Correo electronico:</label>
-                <input onChange={handleChange} type='email' name='email' placeholder='correo@domimino.com'/>
+                <input className='login-text-input' onChange={handleChange} type='email' name='email' placeholder='correo@domimino.com'/>
 
                 <label>Nombre de institucion:</label>
-                <input onChange={handleChange} type='text' name='institutionName' placeholder='Nombre'/>
+                <input className='login-text-input' onChange={handleChange} type='text' name='institutionName' placeholder='Nombre'/>
 
                 <label>Contraseña:</label>
-                <input onChange={handleChange} type='password' name='password' placeholder='Contraseña'/>
+                <input className='login-text-input' onChange={handleChange} type='password' name='password' placeholder='Contraseña'/>
 
                 <label>Confirmar contraseña:</label>
-                <input onChange={handleChange} type='password' name='confirmedPassword' placeholder='Contraseña'/>
+                <input className='login-text-input' onChange={handleChange} type='password' name='confirmedPassword' placeholder='Contraseña'/>
 
                 <label>Nivel educativo:</label>
 
-                <select name='academicLevel' onChange={handleChange}>
-                    <option value={'college'}>Universidad</option>
-                    <option value={'high'}>Preparatoria</option>
-                    <option value={'middle'}>Secundaria</option>
-                    <option value={'elementary'}>Primaria</option>
-                </select>
+                <div>
+                    <input type='checkbox' onChange={handleCheckboxChange} name='' value={'college'}/> <label className='inline'>Universidad</label>
+                </div>
+                
+                <div>
+                    <input type='checkbox' onChange={handleCheckboxChange} name='' value={'high'}/> <label className='inline'>Preparatoria</label>
+                </div>
+
+                <div>
+                    <input type='checkbox' onChange={handleCheckboxChange} name='' value={'middle'}/> <label className='inline'>Secundaria</label>
+                </div>
+                
+                <div>
+                    <input type='checkbox' onChange={handleCheckboxChange} name='' value={'elementary'}/> <label className='inline'>Primaria</label>
+                </div>
                 
                 <div className='flex items-center justify-center mt-2'>
-                <Link href={'/login'} className='text-blue-600 hover:text-blue-800 text-center visited:text-purple-600'>¿Ya tiene cuenta? Inicie sesión</Link>
+                    <Link href={'/login'} className='text-blue-600 hover:text-blue-800 text-center visited:text-purple-600'>¿Ya tiene cuenta? Inicie sesión</Link>
                 </div>
                 
                 <button>Registrarse</button>

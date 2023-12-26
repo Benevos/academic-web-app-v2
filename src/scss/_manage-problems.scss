@@ -1,0 +1,190 @@
+.manage-problems
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100dvh - 137px);
+    width: 100%;
+}
+
+.manage-problems-content
+{
+    width: 100%;
+    position: relative;
+
+    padding: 10px;
+    border-radius: 8px;
+
+    background-color: white;
+    box-shadow: $shadow-1;
+}
+
+.manage-problems-grid
+{
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    background-color: white;
+    overflow-x: auto;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+}
+
+.manage-problems-grid-items-wrapper
+{
+    display: contents;
+
+    &:hover > div
+    {
+        background-color: #F0F0F0;
+    }
+}
+
+.manage-problems-grid-items-wrapper:nth-child(even)
+{
+    &:hover > div
+    {
+        background-color: #F0F0F0;
+    }
+}
+
+.manage-problems-grid-items-wrapper:nth-child(even) > div
+{
+    background-color: #f5f5f5;
+}
+
+.manage-problems-grid-heading
+{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    padding: 5px;
+
+    &:hover
+    {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+}
+
+.manage-problems-grid-item
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: pre-wrap;
+    overflow: auto;
+    max-height: 250px;
+    border-top: 1px solid #CCCCCC;
+}
+
+#manage-problems-grid-paragraph
+{
+    justify-content: start;
+    text-align: justify;
+}
+
+.manage-problems-grid-button
+{
+    
+}
+
+.manage-problems-edit
+{
+    color: $auxiliar-1;
+
+    &:hover
+    {
+        transition: 150ms ease-in;
+        color: $auxiliar-4;
+    }
+}
+
+.manage-problems-delete
+{
+    color: red;
+    cursor: pointer;
+
+    &:hover
+    {
+        transition: 150ms ease-in;
+        color: $red-4
+    }
+}
+
+.manage-problems-filters-button
+{   
+    position: absolute;
+
+    font-size: x-large;
+
+    right: 50px;
+    top: 15px;
+
+    color: rgb(255, 187, 0);
+
+    &:hover
+    {
+        transition: 150ms ease-in;
+        color: $auxiliar-3;
+    }
+
+    @media (max-width: 550px) 
+    {
+        right: 15px;    
+    }
+}
+
+.manage-problems-filter-dialog
+{
+    background-color: rgba(0, 0, 0, 0);
+    width: 60%;
+}
+
+.manage-problems-filter-dialog-content
+{
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    padding: 15px;
+    border-radius: 8px;
+
+    background-color: white;
+}
+
+.manage-problems-select
+{   
+    border: 2px solid $blue-1;
+    padding: 5px;
+    border-radius: 8px;
+
+    &:focus
+    {
+        border: 2px solid $auxiliar-5;
+    }
+
+    @media (max-width: 990px) 
+    {
+        width: 100%;    
+    }
+}
+
+.manage-problems-submit-button
+{
+    width: 100%;
+    margin-top: 10px;
+    background-color: $blue-1;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+
+    &:hover
+    {
+        transition: 150ms ease-in;
+        background-color: $orange-1;
+    }
+}
