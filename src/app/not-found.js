@@ -13,22 +13,24 @@ function NotFound()
 {
   return (
     <div>
-        <Header/>
-        <TopFiller/>
-        <Navbar/>
+      
+          <Header/>
+          <TopFiller/>
+          <Navbar/>
 
-        <div className='flex items-center justify-center min-h-[calc(100dvh-137px)] def-shadow'>
-          <div className='w-[50%] h-[80%] py-[15px] px-[15px] rounded-md bg-white flex flex-col items-center'>
-            <TbBrowserX className='text-6xl text-red-600'/>
-            <h1 className='text-center mt-1'>¡El contenido que buscas no existe!</h1>
+          <div className="w-full h-[calc(100dvh-137px)]">
 
-            <Link href={'/'}> 
-              <button className='not-found-button'>Volver al inicio</button>
-            </Link>
-            
+              <div className="flex items-center justify-center w-full h-full">
+              <div className="flex flex-col p-[35px] items-center justify-center w-[80%] h-[80%] max-sm:w-full bg-white rounded-md def-shadow">
+                  <h1 className="max-md:text-2xl">🤷‍♂️ ¡No existe! 🔎</h1>
+                  <p className="text-lg text-center mt-2 max-md:text-lg">¡La página que buscas no existe, te invitamos a <Link className='underline text-blue-600 hover:text-blue-800 visited:text-purple-600' href={'/'}><strong>seguir explorando!</strong></Link></p>
+                  <p className="text-6xl mt-4">😵</p>
+              </div>
+              </div>
+
           </div>
-        </div>
-    </div>
+
+      </div>
     
   )
 }

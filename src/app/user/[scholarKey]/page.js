@@ -9,7 +9,7 @@ import Header from '@/components/PageTop/Header'
 import Link from "next/link";
 import ProtectedRoute from '@/components/ProtectedRoute';
 
-function ManageStudents() {
+function UserPage() {
     return (
         <div>
       
@@ -33,4 +33,4 @@ function ManageStudents() {
     )
 }
 
-export default ProtectedRoute(ManageStudents);
+export default ProtectedRoute(UserPage);
