@@ -3,18 +3,19 @@ import { SiFacebook } from 'react-icons/si'
 import { FaSquareXTwitter } from 'react-icons/fa6'
 import { BsInstagram } from 'react-icons/bs'
 import Link from 'next/link'
-import FooterRedirects from './FooterRedirects'
+import Image from 'next/image';
+import FooterRedirects from '../FooterRedirects'
 
 
 function FooterTop() {
   return (
     <div className='footer-top-top-content'>
-        <img className='footer-top-uat' src='/footer-uat.svg'/>
+        <Image className='footer-top-uat' width={80} height={80} alt='uat-footer.png' src='/uat-2023-blanco.svg'/>
 
         <FooterRedirects/>
 
         <div>
-        <img className='footer-top-slogan' src='/slogan.svg'/>
+
 
         <div className='footer-top-social'>
             <Link href={'/#'}>

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 
-import TopFiller from '@/components/TopFiller';
-import Navbar from '@/components/Navbar';
-import Header from '@/components/Header';
+import TopFiller from '@/components/PageTop/TopFiller';
+import Navbar from '@/components/PageTop/Navbar';
+import Header from '@/components/PageTop/Header';
 import FormTitle from '@/components/FormTitle';
 import FormInput from '@/components/FormInput';
 
@@ -91,8 +91,10 @@ function ManageCategories()
             setFormState(true);
         }
         
-        setNewCategory({name: '', subcategories: []});
-        setNewSubcategories([]);
+        const scholarKey = JSON.parse(localStorage.getItem('sessionData')).scholarKey;
+
+        setNewCategory({name: '', subcategories: ['all'], scholarKey: scholarKey});
+        setNewSubcategories(['all']);
         setUpdateDocumentId('');
     }
 

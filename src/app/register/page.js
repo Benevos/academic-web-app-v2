@@ -1,13 +1,14 @@
 'use client';
 
-import Header from '@/components/Header'
-import Navbar from '@/components/Navbar'
-import TopFiller from '@/components/TopFiller'
+import Header from '@/components/PageTop/Header'
+import Navbar from '@/components/PageTop/Navbar'
+import TopFiller from '@/components/PageTop/TopFiller'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react';
 import NoAuthUserRoute from '@/components/NoAuthUserRoute';
 import Dialog from '@/components/Dialog';
 import { getCollection, registerUser } from '@/services/firebase';
+import FormTitle from '@/components/FormTitle';
 
 function Register() 
 {
@@ -25,6 +26,8 @@ function Register()
 
     const handleChange = ({ target: { name, value } }) =>
     {
+        if(name === 'scholarKey') name = name.toUpperCase();
+
         setUserData({...userData, [name]: value});
     }
 
@@ -145,6 +148,8 @@ function Register()
         
         <div className='login-container'>
             <form onSubmit={handleSumbit} className='login-form'>
+                <FormTitle title='Registrarse'/>
+
                 <label>Clave escolar:</label>
                 <input className='login-text-input uppercase' onChange={handleChange} type='text' name='scholarKey' placeholder='Clave escolar'/>
 

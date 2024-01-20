@@ -2,9 +2,9 @@
 
 import React, { Suspense, useEffect, useState } from 'react';
 
-import TopFiller from '@/components/TopFiller';
-import Navbar from '@/components/Navbar';
-import Header from '@/components/Header';
+import TopFiller from '@/components/PageTop/TopFiller';
+import Navbar from '@/components/PageTop/Navbar';
+import Header from '@/components/PageTop/Header';
 import FormTitle from '@/components/FormTitle';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { getOneQueryCollection, onGetCollection } from '@/services/firebase';
@@ -19,21 +19,13 @@ function ManageProblems()
 {
     const [problems, setProblems] = useState([]);
     const [originalProblems, setOriginalProblems] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [subcategories, setSubcategories] = useState([]);
-    const [academicLevels, setAcademicLevels] = useState([]);
+
     
     const getProblems = async () =>
     {   
         const scholarKey = JSON.parse(localStorage.getItem('sessionData')).scholarKey;
         const problemsCollection = await getOneQueryCollection('problems', 'scholarKey', '==', scholarKey);
-        const categoriesCollection = await getOneQueryCollection('categories', 'scholarKey', '==', scholarKey);
-        const institutionsCollection = await getOneQueryCollection('institutions', 'scholarKey', '==', scholarKey);
-        const instutionAcademicLevels = institutionsCollection[0].academicLevel;
-     
 
-        setAcademicLevels(instutionAcademicLevels);
-        setCategories(categoriesCollection);
         setProblems(problemsCollection);
         setOriginalProblems(problemsCollection);
     }
@@ -58,8 +50,7 @@ function ManageProblems()
         <div>
             <MathJaxContext>
                 
-                <FilterDialog originalProblems={originalProblems} setProblems={setProblems} setSubcategories={setSubcategories}
-                              categories={categories} academicLevels={academicLevels} subcategories={subcategories}/>
+                <FilterDialog originalProblems={originalProblems} setProblems={setProblems}/>
 
                 <Header/>
                 <TopFiller/>

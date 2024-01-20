@@ -6,9 +6,10 @@ import Link from 'next/link'
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import NoAuthUserRoute from '@/components/NoAuthUserRoute';
-import TopFiller from '@/components/TopFiller';
-import Navbar from '@/components/Navbar';
-import Header from '@/components/Header';
+import TopFiller from '@/components/PageTop/TopFiller';
+import Navbar from '@/components/PageTop/Navbar';
+import Header from '@/components/PageTop/Header';
+import FormTitle from '@/components/FormTitle';
 
 function Login() 
 {
@@ -18,6 +19,8 @@ function Login()
 
     const handleChange = ({ target: { name, value } }) =>
     {
+        if(name === 'scholarKey') value = value.toUpperCase();
+
         setUserData({...userData, [name]: value});
     }
 
@@ -91,6 +94,7 @@ function Login()
 
             <div className='login-container'>
             <form onSubmit={handleSumbit} className='login-form'>
+                <FormTitle title='Iniciar sesión'/>
                 <label>Clave escolar:</label>
                 <input className='login-text-input uppercase' onChange={handleChange} type='text' name='scholarKey' placeholder='Clave escolar'/>
 

@@ -1,9 +1,9 @@
 'use client';
 
-import Header from '@/components/Header';
-import Navbar from '@/components/Navbar';
+import Header from '@/components/PageTop/Header';
+import Navbar from '@/components/PageTop/Navbar';
 import ProtectedRoute from '@/components/ProtectedRoute'
-import TopFiller from '@/components/TopFiller';
+import TopFiller from '@/components/PageTop/TopFiller';
 import { getCollection } from '@/services/firebase';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import React, { useEffect, useState } from 'react'

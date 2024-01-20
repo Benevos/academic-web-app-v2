@@ -28,14 +28,14 @@ function DashboardButtonGrid()
                 </div>
             </Link>
 
-            <Link href={'/#'}>
+            <Link href={'/dashboard/add-students'}>
                 <div className='dashboard-button bg-blue-3'>
                     <IoPersonAdd/>
                     <p>Añadir alumnos</p>
                 </div>
             </Link>
 
-            <Link href={'/#'}>
+            <Link href={'/dashboard/manage-students'}>
                 <div className='dashboard-button bg-orange-3'>
                     <FaAddressBook/>
                     <p>Adminstrar alumnos</p>
@@ -49,7 +49,7 @@ function DashboardButtonGrid()
                 </div>
             </Link>
 
-            <Link href={'/#'}>
+            <Link href={'/dashboard/stats'}>
                 <div className='dashboard-button bg-orange-1'>
                     <ImStatsDots/>
                     <p>Estadisticas</p>

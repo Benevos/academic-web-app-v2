@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import TopFiller from '@/components/TopFiller';
-import Navbar from '@/components/Navbar';
-import Header from '@/components/Header';
+import TopFiller from '@/components/PageTop/TopFiller';
+import Navbar from '@/components/PageTop/Navbar';
+import Header from '@/components/PageTop/Header';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardButtonGrid from '@/components/DashboardButtonGrid';
 

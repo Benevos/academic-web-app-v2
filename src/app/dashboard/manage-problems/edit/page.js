@@ -3,9 +3,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-import TopFiller from '@/components/TopFiller';
-import Navbar from '@/components/Navbar';
-import Header from '@/components/Header';
+import TopFiller from '@/components/PageTop/TopFiller';
+import Navbar from '@/components/PageTop/Navbar';
+import Header from '@/components/PageTop/Header';
 import FormTitle from '@/components/FormTitle';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Previsualization from '@/components/Previsualization';
@@ -359,7 +359,7 @@ function EditProblem()
 
                     <select className='create-problem-select' name='subcategory' defaultValue={'default'} onChange={handleChange}>
                       <option value={'default'} disabled>(Seleccione subcategoria)</option>
-                        {subcategories.map((subcategory, index) => <option value={subcategory.name} key={'subcat'+index}>{subcategory === 'all' ? 'General' : subcategory}</option>)}
+                        {subcategories.map((subcategory, index) => <option value={subcategory} key={'subcat'+index}>{subcategory === 'all' ? 'General' : subcategory}</option>)}
                     </select>
                   </div>
 

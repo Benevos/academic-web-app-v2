@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import FormTitle from './FormTitle'
+import { getOneQueryCollection } from '@/services/firebase';
 
-function FilterDialog({ categories, subcategories, academicLevels, originalProblems, setProblems, setSubcategories }) 
+function FilterDialog({originalProblems, setProblems }) 
 {
+    const [subcategories, setSubcategories] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [academicLevels, setAcademicLevels] = useState([]);
+
     const [filters, setFilters] = useState({
         category: 'all',
         subcategory: 'all',
@@ -46,6 +51,18 @@ function FilterDialog({ categories, subcategories, academicLevels, originalProbl
         filterDialog.close();
     }
 
+    const getInitialData = async () =>
+    {
+        const scholarKey = JSON.parse(localStorage.getItem('sessionData')).scholarKey;
+        
+        const categoriesCollection = await getOneQueryCollection('categories', 'scholarKey', '==', scholarKey);
+        const institutionsCollection = await getOneQueryCollection('institutions', 'scholarKey', '==', scholarKey);
+        const instutionAcademicLevels = institutionsCollection[0].academicLevel;
+
+        setAcademicLevels(instutionAcademicLevels);
+        setCategories(categoriesCollection);
+    }
+
     useEffect(() =>
     {
         setFilters({...filters, subcategory: 'all'})
@@ -60,6 +77,11 @@ function FilterDialog({ categories, subcategories, academicLevels, originalProbl
         setSubcategories(currentCategoryDoc.subcategories);
 
     }, [filters.category])
+
+    useEffect(() =>
+    {
+        getInitialData();
+    }, [])
 
 
 

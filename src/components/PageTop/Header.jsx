@@ -37,7 +37,7 @@ function Header()
     return (
         <div className='w-full h-24 bg-white flex justify-around items-center fixed z-50 header'>
             <Link href={'https://www.uat.edu.mx/'}>
-                <Image priority className='h-auto w-auto py-2 px-2 max-md:w-32' src={'/uat.png'} height={130} width={130} alt='UAT'/>
+                <Image priority className='h-[90px] w-auto py-2 px-2 max-md:w-[250px]' src={'/uat-logo-2023.svg'} height={130} width={130} alt='UAT'/>
             </Link>
 
             <div className='flex'>
@@ -47,29 +47,31 @@ function Header()
                     </div>
                 </Link>
 
-                <Link href={'/#'}>
-                    <div className='headerIcon'>
-                        <LuMail size={iconSize}/>
-                    </div>
-                </Link>
+                {
+         /*            <Link href={'/#'}>
+                        <div className='headerIcon'>
+                            <LuMail size={iconSize}/>
+                        </div>
+                    </Link>
 
-                <Link href={'/#'}>
-                    <div className='headerIcon'>
-                        <MdOutlineCalendarMonth size={iconSize}/>
-                    </div>
-                </Link>
+                    <Link href={'/#'}>
+                        <div className='headerIcon'>
+                            <MdOutlineCalendarMonth size={iconSize}/>
+                        </div>
+                    </Link>
 
-                <Link href={'/#'}>
-                    <div className='headerIcon'>
-                        <RiBillFill size={iconSize}/>
-                    </div>
-                </Link>
+                    <Link href={'https://facturacion.uat.edu.mx/facturacion_siiaa/'}>
+                        <div className='headerIcon'>
+                            <RiBillFill size={iconSize}/>
+                        </div>
+                    </Link>
 
-                <Link href={'/#'}>
-                    <div className='headerIcon'>
-                        <FaEarthAmericas size={iconSize}/>
-                    </div>
-                </Link>
+                    <Link href={'https://plataformauat.uat.edu.mx/'}>
+                        <div className='headerIcon'>
+                            <FaEarthAmericas size={iconSize}/>
+                        </div>
+                    </Link> */
+                }
 
                 {/*<Link href={'/#'}>
                     <div className='headerIcon'>
