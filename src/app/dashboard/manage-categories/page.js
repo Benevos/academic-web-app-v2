@@ -73,6 +73,14 @@ function ManageCategories()
     {
         e.preventDefault();
 
+        const duplicatedCategories = categories.filter(category => category.name === newCategory.name.trim()).length;
+
+        if(duplicatedCategories >= 1)
+        {
+            alert(`La cateogria ${newCategory.name.trim()} ya existe`);
+            return;
+        }
+
         if(newCategory.name.trim() === '')
         {
             alert('No vacios');
