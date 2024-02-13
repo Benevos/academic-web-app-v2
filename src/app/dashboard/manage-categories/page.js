@@ -108,6 +108,11 @@ function ManageCategories()
 
     const handleDelete = async (id) =>
     {
+        if(!confirm("ADVERTENCIA: esta acción NO se puede revertir, si borra la categoria, tambien se eliminarán los problemas asociados, ¿continuar?"))
+        {
+            return;
+        }
+
         const currentDocument = await getDocument('categories', id);
 
         const categoryDocuments = await getTwoQueryCollection('problems', ['category', 'scholarKey'], ['==', '=='], [currentDocument.name, currentDocument.scholarKey]);
