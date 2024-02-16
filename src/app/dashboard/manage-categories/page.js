@@ -75,7 +75,7 @@ function ManageCategories()
 
         const duplicatedCategories = categories.filter(category => category.name === newCategory.name.trim()).length;
 
-        if(duplicatedCategories >= 1)
+        if(duplicatedCategories >= 1 && formState)
         {
             alert(`La cateogria ${newCategory.name.trim()} ya existe`);
             return;
