@@ -10,7 +10,7 @@ import FooterRedirects from '../FooterRedirects'
 function FooterTop() {
   return (
     <div className='footer-top-top-content'>
-        <Image className='footer-top-uat' width={80} height={80} alt='uat-footer.png' src='/uat-2023-blanco.svg'/>
+        <Image className='footer-top-uat' width={80} height={80} alt='uat-footer.png' src='/UAT-Logotipo-2024-Blanco.svg'/>
 
         <FooterRedirects/>
 

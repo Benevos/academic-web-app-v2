@@ -63,7 +63,8 @@
 .footer-top-redirects
 {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+
     justify-content: space-between;
 
     max-width: 500px;
