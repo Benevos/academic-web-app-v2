@@ -35,7 +35,7 @@ function Navbar()
     }, []);
 
     return (
-        <nav className='navbar py-0'>
+        <nav className='navbar z-50 py-0'>
             <ul className='flex items-center justify-center h-full w-full mb-0 p-0 gap-3 max-md:hidden'>
                 <li className='flex items-center justify-center h-full text-base text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
                     <Link href={'/#'}>NOSOTROS</Link>
@@ -87,7 +87,7 @@ function Navbar()
             </div>
 
             <div style={{width: isOpen ? '300px' : '0px'}}
-                 className='fixed top-[96px] right-0 h-[calc(100dvh-96px)] w-[300px] overflow-x-hidden transition-all min-[768px]:hidden'>
+                 className='fixed top-[96px] right-0 h-[calc(100dvh-96px)] w-[300px] overflow-x-hidden transition-all min-[768px]:hidden z-50'>
                 <div className='w-[300px] h-full bg-[rgb(0,66,106)] text-white'>
                     <ul className='flex flex-col w-full p-8'>
 
