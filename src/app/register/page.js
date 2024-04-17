@@ -26,7 +26,7 @@ function Register()
 
     const handleChange = ({ target: { name, value } }) =>
     {
-        if(name === 'scholarKey') name = name.toUpperCase();
+        if(name === 'scholarKey') value = value.toUpperCase();
 
         setUserData({...userData, [name]: value});
     }

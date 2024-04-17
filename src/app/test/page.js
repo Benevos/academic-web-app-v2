@@ -1,17 +1,32 @@
 'use client';
 
-import Header from '@/components/PageTop/Header';
-import Navbar from '@/components/PageTop/Navbar';
-import ProtectedRoute from '@/components/ProtectedRoute'
-import TopFiller from '@/components/PageTop/TopFiller';
 import { getCollection } from '@/services/firebase';
-import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import React, { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic';
+import { NoSSR } from '@/components/NoSSR';
+
+const ClientMathJax = dynamic(() => import('better-react-mathjax').then((mod) => mod.MathJax), {ssr: false}) 
+const ClientMathJaxContext = dynamic(() => import('better-react-mathjax').then((mod) => mod.MathJaxContext), {ssr: false}) 
 
 function Test() 
 {
   const [info, setInfo] = useState([{paragraph: ''}]);
   const [data, setData] = useState('');
+
+  const mathJaxReanalyze = async () => 
+    {
+        if (typeof window !== 'undefined' && window.MathJax) 
+        {
+            try
+            {
+                await window.MathJax.typesetPromise();
+            }
+            catch(e)
+            {
+                console.log("MatJax error: " + e);
+            }
+        }
+    }
 
   const getThingsReady = async () =>
   {
@@ -30,18 +45,19 @@ function Test()
 
   return (
     <div>
-
-      <Header/>
-      <TopFiller/>
-      <Navbar/>
-
+    
       <input onChange={handleChange}></input>
 
-      <MathJaxContext>
-        <MathJax>
-          {data}
-        </MathJax>
-      </MathJaxContext>
+      <NoSSR>
+        
+        <ClientMathJaxContext>
+          <ClientMathJax>
+            {data}
+          </ClientMathJax>
+        </ClientMathJaxContext>
+
+      </NoSSR>
+      
      
     </div>
   )
