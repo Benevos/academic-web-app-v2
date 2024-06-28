@@ -38,7 +38,7 @@ function Navbar()
         <nav className='navbar z-50 py-0'>
             <ul className='flex items-center justify-center h-full w-full mb-0 p-0 gap-3 max-md:hidden'>
                 <li className='flex items-center justify-center h-full text-base text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
-                    <Link href={'/about'}>NOSOTROS</Link>
+                    <Link href={'/#'}>NOSOTROS</Link>
                 </li>
                 <li className='flex items-center justify-center h-full text-base text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
                     <Link href={'/#'}>OFERTA ACÁDEMICA</Link>
@@ -144,7 +144,7 @@ function Navbar()
 
                         <li className='w-full hover:bg-[#376986] rounded-md transition-all'>
                             <div className='h-full py-1 px-2 border-b-[1px] border-[rgba(255,255,255,0.2)]'>
-                                <Link className='block w-full h-full text-sm' href={'/about'}>
+                                <Link className='block w-full h-full text-sm' href={'/#'}>
                                     NOSOTROS
                                 </Link>
                             </div>

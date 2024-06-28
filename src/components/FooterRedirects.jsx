@@ -29,7 +29,7 @@ function FooterRedirects() {
         </div>
 
         <div className='footer-top-redirects-button-container'>
-            <Link className='block' href={'/#'}>
+            <Link className='block' href={'/privacy'}>
             • Aviso de privacidad
             </Link>
         </div> 
