@@ -38,7 +38,7 @@ function Navbar()
         <nav className='navbar z-50 py-0'>
             <ul className='flex items-center justify-center h-full w-full mb-0 p-0 gap-3 max-md:hidden'>
                 <li className='flex items-center justify-center h-full text-base text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
-                    <Link href={'/#'}>NOSOTROS</Link>
+                    <Link href={'/about'}>NOSOTROS</Link>
                 </li>
                 <li className='flex items-center justify-center h-full text-base text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
                     <Link href={'/#'}>OFERTA ACÁDEMICA</Link>
