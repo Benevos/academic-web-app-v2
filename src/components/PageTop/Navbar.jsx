@@ -144,7 +144,7 @@ function Navbar()
 
                         <li className='w-full hover:bg-[#376986] rounded-md transition-all'>
                             <div className='h-full py-1 px-2 border-b-[1px] border-[rgba(255,255,255,0.2)]'>
-                                <Link className='block w-full h-full text-sm' href={'/#'}>
+                                <Link className='block w-full h-full text-sm' href={'/about'}>
                                     NOSOTROS
                                 </Link>
                             </div>
