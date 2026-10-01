@@ -1,3 +1,6 @@
+Calcula UAT Web Application is the teacher-facing component of the Calcula UAT educational platform. Built with Next.js and React, the application enables educational institutions to create and manage mathematical problems and categories and to inspect performance statistics generated from interactions recorded by the companion mobile application. Cloud Firestore provides shared data persistence between both components.
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
