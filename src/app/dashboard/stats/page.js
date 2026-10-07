@@ -83,14 +83,14 @@ function Stats()
         newChartsData.push(pieChartData);
 
         const minorToOneMinute = responsesCollection.filter(response => response.elapsedTime < 60).length;
-        const mayorToOneAndMinorToThreeMinutes = responsesCollection.filter(response => response.elapsedTime > 60 && response.elapsedTime < 180).length;
+        const mayorToOneAndMinorToThreeMinutes = responsesCollection.filter(response => response.elapsedTime >= 60 && response.elapsedTime <= 180).length;
         const mayorToThreeMinutes = responsesCollection.filter(response => response.elapsedTime > 180).length;
-
+        
         const barChartData = [
-            ['Intervalos (t)', 'Respuestas', {role: 'style'}],
-            ['< 1 min', minorToOneMinute, 'green'],
-            ['1 => 3 min', mayorToOneAndMinorToThreeMinutes, 'yellow'],
-            ['> 3 min', mayorToThreeMinutes, 'red']
+             ['Intervalos (t)', 'Respuestas', {role: 'style'}],
+             ['< 1 min', minorToOneMinute, 'green'],
+             ['1–3 min', mayorToOneAndMinorToThreeMinutes, 'yellow'],
+             ['> 3 min', mayorToThreeMinutes, 'red']
         ];
 
         newChartsData.push(barChartData)
