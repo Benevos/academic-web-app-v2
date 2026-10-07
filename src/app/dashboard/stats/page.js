@@ -75,10 +75,10 @@ function Stats()
         const incorrectAnseredAttemps = responsesCollection.filter((response) => response.attemps !== 1).length;
         
         const pieChartData = [
-            ['Estado', 'Numero de respuestas'],
-            ['Correcto', correctAnseredAttemps],
-            ['Incorrecto', incorrectAnseredAttemps]
-        ];
+             ['Resultado', 'Número de respuestas'],
+             ['Primer intento', correctAnseredAttemps],
+             ['Múltiples intentos', incorrectAnseredAttemps]
+           ];
 
         newChartsData.push(pieChartData);
 
@@ -96,8 +96,8 @@ function Stats()
         newChartsData.push(barChartData)
 
         const scatterChartData = [
-            ['Tiempo (segundos)', 'Respuestas'],
-        ];
+             ['Intentos', 'Tiempo (segundos)'],
+          ];
     
         responsesCollection.forEach((response) =>
         {
@@ -219,7 +219,7 @@ function Stats()
                         <div className='w-full'>
                             <Chart 
                             chartType='PieChart' 
-                            options={{title: 'Veces respondido correctamente'}}
+                            options={{title: 'Resolución según número de intentos'}}
                             data={chartsData[0]}/>
 
                             <div className='w-full flex justify-center items-center'>
