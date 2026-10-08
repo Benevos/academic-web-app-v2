@@ -7,9 +7,7 @@ import { IoMenu } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { GoHomeFill } from "react-icons/go";
-import { MdAccountCircle } from "react-icons/md";
 import { IoCloseSharp } from "react-icons/io5";
-
 
 function Navbar() 
 {
@@ -60,11 +58,7 @@ function Navbar()
                             <MdDashboard/>
                         </Link>
                     </li>
-                    <li className='flex items-center justify-center h-full text-2xl text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
-                        <Link href={'/user/'+user.scholarKey}>
-                            <MdAccountCircle/>
-                        </Link>
-                    </li>
+
                     <li className='flex items-center justify-center h-full text-2xl text-red-500 cursor-pointer transition-all hover:text-red-300'>
                         <button onClick={handleLogOut}>
                             <IoLogOut/>
@@ -112,17 +106,6 @@ function Navbar()
                                                 PANEL DE TRABAJO
 
                                                 <MdDashboard className='text-xl'/>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </li>
-                                <li className='w-full hover:bg-[#376986] rounded-md transition-all'>
-                                    <div className='h-full py-1 px-2 border-b-[1px] border-[rgba(255,255,255,0.2)]'>
-                                        <Link className='block w-full h-full text-sm' href={'/user/'+user.scholarKey}>
-                                            <div className='w-full flex items-center justify-between'>
-                                                CUENTA
-
-                                                <MdAccountCircle className='text-xl'/>
                                             </div>
                                         </Link>
                                     </div>
