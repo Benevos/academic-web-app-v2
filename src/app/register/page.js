@@ -128,10 +128,14 @@ function Register()
             
             setDialogConfig({title: 'Exito', message: 'Usuario registrado con exito', disabled: false})
 
-            for(let i = 0; i < inputs.length; i++)
-            {
-                inputs[i].value = '';
-            }
+           setUserData({
+                        scholarKey: '',
+                        email: '',
+                        password: '',
+                        confirmedPassword: '',
+                        institutionName: '',
+                        academicLevel: [null, null, null, null]
+                    });
 
         }
         catch({ message })
