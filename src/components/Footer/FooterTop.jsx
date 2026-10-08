@@ -1,44 +1,60 @@
 import React from 'react';
-import { SiFacebook } from 'react-icons/si'
-import { FaSquareXTwitter } from 'react-icons/fa6'
-import { BsInstagram } from 'react-icons/bs'
-import Link from 'next/link'
 import Image from 'next/image';
-import FooterRedirects from '../FooterRedirects'
+import Link from 'next/link';
 
-
-function FooterTop() {
+function FooterTop()
+{
   return (
     <div className='footer-top-top-content'>
-        <Image className='footer-top-uat' width={80} height={80} alt='uat-footer.png' src='/UAT-Logotipo-2024-Blanco.svg'/>
 
-        <FooterRedirects/>
+      <Image
+        className='footer-top-uat'
+        width={80}
+        height={80}
+        alt='Universidad Autónoma de Tamaulipas'
+        src='/UAT-Logotipo-2024-Blanco.svg'
+      />
 
-        <div>
+      <div className='footer-top-redirects'>
 
-
-        <div className='footer-top-social'>
-            <Link href={'/#'}>
-              <div className='footer-top-social-img-container'>
-                <SiFacebook className='footer-top-social-img'/>
-              </div>
-            </Link>
-
-            <Link href={'/#'}>
-              <div className='footer-top-social-img-container'>
-                <FaSquareXTwitter className='footer-top-social-img'/>
-              </div>
-            </Link>
-            
-            <Link href={'/#'}>
-              <div className='footer-top-social-img-container'>
-                <BsInstagram className='footer-top-social-img'/>
-              </div>
-            </Link>
+        <div className='footer-top-redirects-button-container'>
+          <Link className='block' href={'/'}>
+            Calcula UAT
+          </Link>
         </div>
+
+        <div className='footer-top-redirects-button-container'>
+          <Link className='block' href={'/privacy'}>
+            Aviso de privacidad
+          </Link>
         </div>
+
+        <div className='footer-top-redirects-button-container'>
+          <Link
+            className='block'
+            href={'https://github.com/Benevos/academic-web-app-v2'}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Repositorio web
+          </Link>
+        </div>
+
+        <div className='footer-top-redirects-button-container'>
+          <Link
+            className='block'
+            href={'https://github.com/Benevos/academic-mobile-app'}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Repositorio móvil
+          </Link>
+        </div>
+
+      </div>
+
     </div>
-  )
+  );
 }
 
-export default FooterTop
+export default FooterTop;
