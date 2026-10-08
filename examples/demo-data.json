@@ -1,0 +1,95 @@
+{
+  "institutions": [
+    {
+      "scholarKey": "DEMO01",
+      "email": "demo@example.edu",
+      "institutionName": "Calcula UAT Demo Institution",
+      "password": "demo-password",
+      "academicLevel": [
+        "college",
+        "high",
+        "middle",
+        "elementary"
+      ]
+    }
+  ],
+
+  "categories": [
+    {
+      "name": "Arithmetic",
+      "subcategories": [
+        "all",
+        "Addition",
+        "Subtraction"
+      ],
+      "scholarKey": "DEMO01"
+    }
+  ],
+
+  "problems": [
+    {
+      "scholarKey": "DEMO01",
+      "title": "Basic addition",
+      "paragraph": "What is 25 + 17?",
+      "category": "Arithmetic",
+      "subcategory": "Addition",
+      "difficulty": "easy",
+      "academicLevel": "elementary",
+      "answers": [
+        "40",
+        "41",
+        "42",
+        "43"
+      ],
+      "solution": "3"
+    },
+
+    {
+      "scholarKey": "DEMO01",
+      "title": "Basic subtraction",
+      "paragraph": "What is 50 - 18?",
+      "category": "Arithmetic",
+      "subcategory": "Subtraction",
+      "difficulty": "easy",
+      "academicLevel": "elementary",
+      "answers": [
+        "30",
+        "31",
+        "32",
+        "33"
+      ],
+      "solution": "3"
+    },
+
+    {
+      "scholarKey": "DEMO01",
+      "title": "Intermediate addition",
+      "paragraph": "What is 125 + 78?",
+      "category": "Arithmetic",
+      "subcategory": "Addition",
+      "difficulty": "normal",
+      "academicLevel": "middle",
+      "answers": [
+        "193",
+        "203",
+        "213",
+        "223"
+      ],
+      "solution": "2"
+    }
+  ],
+
+  "responses": [
+    {
+      "scholarKey": "DEMO01",
+      "problemReference": "Replace with the Firestore document ID of a demo problem",
+      "attemps": 1,
+      "elapsedTime": 8,
+      "date": {
+        "day": 8,
+        "month": 10,
+        "year": 2026
+      }
+    }
+  ]
+}
