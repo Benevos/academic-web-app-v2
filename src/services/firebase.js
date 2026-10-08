@@ -4,13 +4,14 @@ import { getAuth } from "firebase/auth";
 import { getFirestore, collection, addDoc, getDoc, getDocs, where, query, onSnapshot, deleteDoc, updateDoc, doc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
+// Firebase configuration loaded from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyDt4uluKprciv23WqsW4JS8od2NO5BKlV8",
-  authDomain: "academic-platform.firebaseapp.com",
-  projectId: "academic-platform",
-  storageBucket: "academic-platform.appspot.com",
-  messagingSenderId: "787137987014",
-  appId: "1:787137987014:web:d3d912b55102e9c89d32c7"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
 
