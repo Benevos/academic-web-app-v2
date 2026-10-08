@@ -5,58 +5,73 @@ import { useRouter } from 'next/navigation';
 import Loading from './Loading';
 import { getOneQueryCollection } from '@/services/firebase';
 
-function ProtectedRoute(Component) 
+function ProtectedRoute(Component)
 {
-  return function AuthenticatedComponent(props) 
+  return function AuthenticatedComponent(props)
   {
-    const [user, setUser] = useState(null)
-    const [userFound, setUserFound] = useState(true);
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [isAuthenticating, setIsAuthenticating] = useState(true);
 
     const router = useRouter();
 
-    const authUser = async () =>
+    useEffect(() =>
+    {
+      const authenticateUser = async () =>
+      {
+        try
+        {
+          const storedSession = localStorage.getItem('sessionData');
+
+          if(!storedSession)
           {
-              const institutionData = await getOneQueryCollection(
-                  'institutions',
-                  'scholarKey',
-                  '==',
-                  user.scholarKey
-              );
-          
-              if(institutionData.length <= 0)
-              {
-                  setUserFound(false);
-                  return;
-              }
-          
-              setLoading(false);
+            router.replace('/login');
+            return;
           }
 
-    useEffect(() =>
-    {
-      setUser(JSON.parse(localStorage.getItem('sessionData')));
-      setIsAuthenticating(false);
-    }, [])
+          const sessionData = JSON.parse(storedSession);
 
-    useEffect(() =>
-    {
-      if(!isAuthenticating && user)
-      {
-        authUser();
-      }
-    }, [isAuthenticating]);
+          if(!sessionData || !sessionData.scholarKey)
+          {
+            localStorage.removeItem('sessionData');
+            router.replace('/login');
+            return;
+          }
 
-    if(!isAuthenticating && (!user || !userFound))
-    {
-      router.push('/login');
-      return <Loading message='No autorizado, redireccionando...'/>
-    }    
+          const institutionData = await getOneQueryCollection(
+            'institutions',
+            'scholarKey',
+            '==',
+            sessionData.scholarKey
+          );
 
-    return ( 
-      loading ? <Loading message='Autenticando...'/> : <Component {...props}  />
-    );
+          if(!institutionData || institutionData.length === 0)
+          {
+            localStorage.removeItem('sessionData');
+            router.replace('/login');
+            return;
+          }
+
+          setUser(sessionData);
+          setLoading(false);
+        }
+        catch(error)
+        {
+          console.error('Session validation error:', error);
+
+          localStorage.removeItem('sessionData');
+          router.replace('/login');
+        }
+      };
+
+      authenticateUser();
+    }, [router]);
+
+    if(loading)
+    {
+      return <Loading message='Autenticando...'/>;
+    }
+
+    return user ? <Component {...props}/> : null;
   };
 }
 
