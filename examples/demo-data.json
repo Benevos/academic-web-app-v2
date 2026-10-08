@@ -79,17 +79,17 @@
     }
   ],
 
-  "responses": [
-    {
-      "scholarKey": "DEMO01",
-      "problemReference": "Replace with the Firestore document ID of a demo problem",
-      "attemps": 1,
-      "elapsedTime": 8,
-      "date": {
-        "day": 8,
-        "month": 10,
-        "year": 2026
-      }
+"responses": [
+  {
+    "scholarKey": "DEMO01",
+    "problemId": "REPLACE_WITH_FIRESTORE_PROBLEM_DOCUMENT_ID",
+    "attemps": 1,
+    "elapsedTime": 8,
+    "date": {
+      "day": 8,
+      "month": 10,
+      "year": 2026
     }
-  ]
+  }
+]
 }
