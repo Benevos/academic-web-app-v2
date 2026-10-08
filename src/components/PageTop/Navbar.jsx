@@ -35,22 +35,12 @@ function Navbar()
     return (
         <nav className='navbar z-50 py-0'>
             <ul className='flex items-center justify-center h-full w-full mb-0 p-0 gap-3 max-md:hidden'>
-                <li className='flex items-center justify-center h-full text-base text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
-                    <Link href={'/#'}>NOSOTROS</Link>
-                </li>
-                <li className='flex items-center justify-center h-full text-base text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
-                    <Link href={'/#'}>OFERTA ACÁDEMICA</Link>
-                </li>
-                <li className='flex items-center justify-center h-full text-base text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
-                    <Link href={'/#'}>CAMPUS</Link>
-                </li>
                 <li className='flex items-center justify-center h-full text-2xl text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
                     <Link href={'/'}>
                         <GoHomeFill/>
                     </Link>
                 </li>
-                
-
+           
                 {user ?
                 <>
                     <li className='flex items-center justify-center h-full text-2xl text-white cursor-pointer transition-all hover:text-[#ECB06F]'>
@@ -124,29 +114,7 @@ function Navbar()
                                 </div>
                             </li>
                         }
-
-                        <li className='w-full hover:bg-[#376986] rounded-md transition-all'>
-                            <div className='h-full py-1 px-2 border-b-[1px] border-[rgba(255,255,255,0.2)]'>
-                                <Link className='block w-full h-full text-sm' href={'/#'}>
-                                    NOSOTROS
-                                </Link>
-                            </div>
-                        </li>
-                        <li className='w-full hover:bg-[#376986] rounded-md transition-all'>
-                            <div className='h-full py-1 px-2 border-b-[1px] border-[rgba(255,255,255,0.2)]'>
-                                <Link className='block w-full h-full text-sm' href={'/#'}>
-                                    OFERTA ACÁDEMICA
-                                </Link>
-                            </div>
-                        </li>
-                        <li className='w-full hover:bg-[#376986] rounded-md transition-all'>
-                            <div className='h-full py-1 px-2 border-b-[1px] border-[rgba(255,255,255,0.2)]'>
-                                <Link className='block w-full h-full text-sm' href={'/#'}>
-                                    CAMPUS
-                                </Link>
-                            </div>
-                        </li>
-                        
+                      
                         {user ?
                             <li className='w-full hover:bg-[#376986] rounded-md transition-all text-red-500 font-medium'>
                                 <div className='h-full py-1 px-2 border-b-[1px] border-[rgba(255,255,255,0.2)]'>
