@@ -1,13 +1,18 @@
-import Link from 'next/link'
-import React from 'react'
+import React from 'react';
+import Link from 'next/link';
 
-function FooterBottom() 
+function FooterBottom()
 {
-    return (
-        <div className='footer-bottom'>
-            <address>Universidad Autónoma de Tamaulipas. Matamoros SN, Zona Centro Ciudad Victoria, Tamaulipas, C.P. 87000 / Teléfono: <Link href={'tel:+520000000000'}>+52 000 000 0000</Link> / <Link href={'/#'}>Contacto</Link></address>
-        </div>
-    )
+  return (
+    <div className='footer-bottom'>
+      <address>
+        Unidad Académica Multidisciplinaria Mante · Universidad Autónoma de Tamaulipas ·{' '}
+        <Link href={'mailto:amlerma@docentes.uat.edu.mx'}>
+          amlerma@docentes.uat.edu.mx
+        </Link>
+      </address>
+    </div>
+  );
 }
 
-export default FooterBottom
+export default FooterBottom;
