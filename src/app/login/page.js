@@ -68,7 +68,10 @@ function Login()
             setDialogConfig({title: 'Iniciando sesión', message: 'Por favor, espere', color: 'primary', disabled: true});
             dialog.showModal();
 
-            localStorage.setItem('sessionData', JSON.stringify(userData));
+            localStorage.setItem(
+                 'sessionData',
+                 JSON.stringify({ scholarKey: userData.scholarKey })
+             );
 
             router.push("/dashboard");
         }
