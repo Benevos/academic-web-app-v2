@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use Calcula UAT in research or education, please cite this software. The SoftwareX article citation will be added after publication."
+title: "Calcula UAT Web Application"
+type: software
+version: 2.0.0
+
+authors:
+  - family-names: "Mendoza-Hernández"
+    given-names: "Kevin Daniel"
+
+  - family-names: "Lerma-Sánchez"
+    given-names: "Ángel Mario"
+    email: "amlerma@docentes.uat.edu.mx"
+
+  - family-names: "Serna-Tello"
+    given-names: "Karen Alejandra"
+
+  - family-names: "Gonzalez-Gonzalez"
+    given-names: "Felipe Anastacio"
+
+  - family-names: "Torres Mata"
+    given-names: "Joaquin"
+
+repository-code: "https://github.com/Benevos/academic-web-app-v2"
+
+license: MIT
+
+keywords:
+  - mental calculation
+  - educational software
+  - learning analytics
+  - Next.js
+  - React
+  - Firebase
+  - Cloud Firestore
+  - mathematics education
