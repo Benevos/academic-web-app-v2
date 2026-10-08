@@ -4,7 +4,7 @@ import Header from '@/components/PageTop/Header'
 import Navbar from '@/components/PageTop/Navbar'
 import TopFiller from '@/components/PageTop/TopFiller'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import NoAuthUserRoute from '@/components/NoAuthUserRoute';
 import Dialog from '@/components/Dialog';
 import { getCollection, registerUser } from '@/services/firebase';
@@ -21,7 +21,14 @@ function Register()
             academicLevel: [null, null, null, null]
         });
 
-    const [academicLevel, setAcademicLevel] = useState([null, null, null, null]);
+    const [userData, setUserData] = useState({
+                scholarKey: '',
+                email: '',
+                password: '',
+                confirmedPassword: '',
+                institutionName: '',
+                academicLevel: [null, null, null, null]
+            });
     const [dialogConfig, setDialogConfig] = useState({title: '', message: '', showButton: true, color: 'primary', disabled: false});
 
     const handleChange = ({ target: { name, value } }) =>
@@ -31,28 +38,32 @@ function Register()
         setUserData({...userData, [name]: value});
     }
 
-    const handleCheckboxChange = ({ target: { checked, value }}) =>
-    {
-        const tempLevel = [...academicLevel];
-
-        const index = value === 'college' ? 0 : value === 'high' ? 1 : value === 'middle' ? 2 : value === 'elementary' ? 3 : undefined;
-
-        if(!checked)
+        const handleCheckboxChange = ({ target: { checked, value }}) =>
         {
-            tempLevel[index] = null;
-            setAcademicLevel(tempLevel);
-            return;
+            const index =
+                value === 'college' ? 0 :
+                value === 'high' ? 1 :
+                value === 'middle' ? 2 :
+                value === 'elementary' ? 3 :
+                undefined;
+        
+            if(index === undefined) return;
+        
+            setUserData((previousData) =>
+            {
+                const updatedLevels = [...previousData.academicLevel];
+        
+                updatedLevels[index] = checked ? value : null;
+        
+                return {
+                    ...previousData,
+                    academicLevel: updatedLevels
+                };
+            });
         }
-
-        tempLevel[index] = value;
-        setAcademicLevel(tempLevel);
-    }  
-
     const handleSumbit = async (e) =>
     {
         e.preventDefault();
-
-        
 
         const inputs = document.getElementsByTagName('input');
         const dialog = document.getElementById('dialog');
@@ -80,13 +91,14 @@ function Register()
         }
 
         let nullCount = 0;
-        academicLevel.forEach(level => {
-            if(level === null) nullCount++;
-        })
+       userData.academicLevel.forEach(level =>
+            {
+                if(level === null) nullCount++;
+            });
 
         if(nullCount >= 4)
         {
-            setDialogConfig({title: 'Error', message: 'Seleccione al menos una categoria', color: 'error'})
+            setDialogConfig({title: 'Error', message: 'Seleccione al menos un nivel educativo', color: 'error'})
             dialog.showModal();
             return;
         }
@@ -127,11 +139,7 @@ function Register()
             setDialogConfig({title: 'Error', message: message, color: 'error'});
         }
     }
-
-    useEffect(() =>
-    {
-        setUserData({...userData, academicLevel: academicLevel})
-    }, [academicLevel])
+   
 
   return (
     <div>
