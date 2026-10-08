@@ -1,15 +1,13 @@
 import React from "react";
 import Navbar from "@/components/PageTop/Navbar";
 import TopFiller from "@/components/PageTop/TopFiller";
-import Header from '@/components/PageTop/Header';
-import Link from "next/link";
+import Header from "@/components/PageTop/Header";
 
-export default function About() 
+export default function Privacy()
 {
-
   return (
     <div>
-      
+
       <Header/>
       <TopFiller/>
       <Navbar/>
@@ -17,152 +15,182 @@ export default function About()
       <div className="w-full">
 
         <div className="flex items-center justify-center w-full py-3">
-          <div className="flex flex-col p-[35px] w-[80%] h-[80%] max-sm:w-full bg-white rounded-md def-shadow whitespace-pre-wrap">
-            
-            <h2>AVISO DE PRIVACIDAD INTEGRAL</h2>
 
-            <p className="mb-3">La Universidad Autónoma de Tamaulipas (y por lo tanto, el desarrollador de esta plataforma), organismo público descentralizado del Estado de Tamaulipas, con autonomía, personalidad jurídica y patrimonio propios, creada por decretos 156 y 157, publicados en el Periódico Oficial del Estado, con fecha 11 de febrero de 1956, que contiene su Ley Constitutiva y su Ley Orgánica, establece el presente Aviso de Privacidad, en términos de lo dispuesto por los artículos 3 fracción I, 34, 35 y 39 de la Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Tamaulipas (en lo sucesivo “la Ley”), de conformidad con lo siguiente:</p>
+          <div className="flex flex-col p-[35px] w-[80%] max-sm:w-full bg-white rounded-md def-shadow">
 
-            <h3 className="mb-2">I. La denominación y domicilio legal del Responsable.</h3>
+            <h1 className="text-2xl font-bold mb-4">
+              Aviso de privacidad de Calcula UAT
+            </h1>
 
-            <p className="mb-3">La denominación de este Responsable es Universidad Autónoma de Tamaulipas, con domicilio en calle Cristóbal Colón, entre Mariano Matamoros y José María Morelos y Pavón, Zona Centro, C.P. 87000, Victoria, Tamaulipas.</p>
-            
-            <h3 className="mb-2">II. Los datos personales que serán sometidos a tratamiento son, de manera enunciativa, más no limitativa:​</h3>
+            <p className="mb-4">
+              Calcula UAT es un prototipo de software educativo y de investigación
+              desarrollado en la Universidad Autónoma de Tamaulipas para apoyar la
+              práctica estructurada del cálculo mental y el análisis descriptivo de
+              las interacciones con ejercicios matemáticos.
+            </p>
 
-            <table className="border-2 whitespace-pre-wrap">
-                <tr className="font-bold"> 
-                    <td className="border-r-2 border-b-2">Categoría</td>
-                    <td className="border-b-2">Tipo de Datos Personales</td>
-                </tr>
-                <tr>
-                    <td className="font-bold border-r-2 border-b-2">Datos identificativos personales</td>
-                    <td className="border-b-2">
-                        {"• Nombre completo\n• Domicilio particular\n• Teléfono casa\n• Teléfono celular\n• Estado Civil\n•  Firma\n•  Registro Federal de Contribuyente (RFC)\n• Clave Única de Registro de Población (CURP)\n• Sexo\n• Talla\n• Complexión\n• Tez\n• Color de cabello\n• Color de ojos\n• Estatura\n• Peso\n• Tipo de sangre\n• Datos familiares (Nombre del cónyuge e hijos, con fechas de nacimiento y sexo de los hijos), y nombre de persona con teléfono de contacto en caso de una emergencia.\n• Dependientes y beneficiariosn\n• Fecha de nacimiento\n• Lugar de nacimiento\n• Fotografía\n• Edad\n• Cartilla del Servicio Militar\n• Licencia de Manejo\n• Pasaporte"}
-                    </td>
-                </tr>
-                <tr>
-                    <td className="font-bold border-r-2 border-b-2">Datos identificativos comerciales</td>
-                    <td className="border-b-2">
-                        {"• Nombre de la persona física o moral\n• Nombre del representante legal\n• Domicilio de la empresa\n• Número de teléfono del representante legal\n• Número de teléfono de la empresa Registro Federal de Contribuyente (RFC) de la persona física o moral\n• Estados de cuenta bancaria de la persona física o moral Constancia de no inhabilitado."}
-                    </td>
-                </tr>
-                <tr>
-                    <td className="font-bold border-r-2 border-b-2">Datos electrónicos</td>
-                    <td className="border-b-2">
-                        {"• Escolaridad\n• Títulos\n• Cédula Profesional\n• Reconocimientos, constancias, diplomas, certificados"}
-                    </td>
-                </tr>
-                <tr>
-                    <td className="font-bold border-r-2 border-b-2">Datos laborales</td>
-                    <td className="border-b-2">
-                        {"• Documentos de reclutamiento y selección\n• Nombramiento Referencias personales y laborales\n• Número de personal\n• Número de seguro social\n• Información de trabajos anteriores"}
-                    </td>
-                </tr>
-                <tr>
-                    <td className="font-bold border-r-2 border-b-2">Datos patrimoniales</td>
-                    <td className="border-b-2">
-                        {"• Seguros\n• Número de cuenta bancaria\Información fiscal\n• Descuentos por orden judicial\n• Descuentos de diversa índole\n• Créditos\n• Ingresos"}
-                    </td>
-                </tr>
-                <tr>
-                    <td className="font-bold border-r-2 border-b-2">Datos biométricos</td>
-                    <td className="border-b-2">
-                        {"• Huella dactilar\n• Escaneo facial"}
-                    </td>
-                </tr>
-                <tr>
-                    <td className="font-bold border-r-2 border-b-2">Datos de salud</td>
-                    <td className="border-b-2">
-                        {"• Incapacidades médicas\n• Padecimientos\n• Enfermedades Uso de aparatos oftalmológicos u ortopédicos\n• Alergias"}
-                    </td>
-                </tr>
-            </table>
+            <p className="mb-4">
+              Este aviso describe específicamente la información utilizada por
+              Calcula UAT v2.0.0. No sustituye los avisos de privacidad institucionales
+              aplicables de la Universidad Autónoma de Tamaulipas.
+            </p>
 
-            <p className="mb-3">Se le informa que se recaban datos personales sensibles tales como: estado de salud presente o futuro, padecimientos o enfermedades.</p>
+            <h2 className="text-xl font-semibold mb-2">
+              1. Información utilizada por la plataforma
+            </h2>
 
-            <h3 className="mb-2">Finalidad</h3>
+            <p className="mb-3">
+              De acuerdo con la implementación actual, Calcula UAT utiliza información
+              necesaria para identificar la institución, organizar el contenido
+              educativo y registrar las interacciones con los ejercicios.
+            </p>
 
-            <p className="mb-3">{"Los datos personales que se recaben serán utilizados con la finalidad de:\n\na) Identificar, ubicar, comunicar, contactar, enviar información y/o beneficios públicos, elaboración de estadísticas científicas o de interés general previstas en ley, así como para los trámites inherentes a las funciones académicas y administrativas de la Universidad Autónoma de Tamaulipas, sus planes y programas que se implementen en la comunidad universitaria, conforme al artículo 14 de la Ley\nb) Realizar los trámites de contratación, ingreso, designación, pago de nómina, cumplimiento de obligaciones legales, administrativas, fiscales y patronales, integración de expediente del personal que labora o laboró en este Responsable, generación de identificaciones, otorgamiento de las prestaciones, movimientos de personal, registro de control de las entradas y salidas del personal, bolsa de trabajo y declaración patrimonial;\nc) Contar con un registro de personas físicas y morales que estén en posibilidades de presentar propuestas para la adjudicación de bienes y/o contratación de servicios para la Universidad Autónoma de Tamaulipas, y\nd) Otorgar cumplimiento a las obligaciones de transparencia establecidas en el artículo 67 y 76 de la Ley de Transparencia y Acceso a la Información Pública del Estado de Tamaulipas, que serán considerados para su publicación y difusión en la Plataforma Nacional de Transparencia, así como en el portal de internet de este Responsable."}</p>
+            <ul className="list-disc pl-6 mb-4">
+              <li>Clave institucional (<code>scholarKey</code>).</li>
+              <li>Nombre de la institución.</li>
+              <li>Correo asociado al registro institucional.</li>
+              <li>Niveles académicos habilitados.</li>
+              <li>
+                Credencial de acceso utilizada por el mecanismo de autenticación del
+                prototipo.
+              </li>
+              <li>Categorías y subcategorías educativas.</li>
+              <li>Problemas matemáticos creados por usuarios institucionales.</li>
+              <li>Identificador del problema resuelto.</li>
+              <li>Número de intentos requeridos para resolverlo.</li>
+              <li>Tiempo transcurrido durante la resolución.</li>
+              <li>Fecha de la interacción.</li>
+            </ul>
 
-            <h3 className="mb-2">III. El fundamento legal que faculta expresamente a la Universidad Autónoma de Tamaulipas para llevar a cabo:</h3>
+            <h2 className="text-xl font-semibold mb-2">
+              2. Información que no forma parte del modelo actual de Calcula UAT
+            </h2>
 
-            <table className="border-2 whitespace-pre-wrap">
-                <tr className="font-bold"> 
-                    <td className="border-r-2 border-b-2">Destinatarios de los datos personales</td>
-                    <td className="border-b-2">País</td>
-                    <td className="border-b-2">Finalidad</td>
-                </tr>
-                <tr>
-                    <td className="border-r-2 border-b-2">Servicio de Administración Tributaria de la Secretaría de Hacienda y Crédito Público.</td>
-                    <td className="border-r-2 border-b-2">México</td>
-                    <td className="border-b-2">Pago de impuestos.</td>
-                </tr>
-                <tr>
-                    <td className="border-r-2 border-b-2">Instituto Mexicano del Seguro Social</td>
-                    <td className="border-r-2 border-b-2">México</td>
-                    <td className="border-b-2">Pago de cuotas.</td>
-                </tr>
-                <tr>
-                    <td className="border-r-2 border-b-2">Auditoría Superior del Estado de Tamaulipas.</td>
-                    <td className="border-r-2 border-b-2">México</td>
-                    <td className="border-b-2">Revisión o auditorías.</td>
-                </tr>
-                <tr>
-                    <td className="border-r-2 border-b-2">Instituto de Previsión y Seguridad Social del Estado de Tamaulipas.</td>
-                    <td className="border-r-2 border-b-2">México</td>
-                    <td className="border-b-2">Pago de cuotas y aportaciones, préstamos y movimientos de personal.</td>
-                </tr>
-                <tr>
-                    <td className="border-r-2 border-b-2">Secretaría de Finanzas.</td>
-                    <td className="border-r-2 border-b-2">México</td>
-                    <td className="border-b-2">Trámites administrativos, financieros y de nómina.</td>
-                </tr>
-                <tr>
-                    <td className="border-r-2 border-b-2">Contraloría Gubernamental del Estado de Tamaulipas.</td>
-                    <td className="border-r-2 border-b-2">México</td>
-                    <td className="border-b-2">Trámites administrativos, revisión o auditorías.</td>
-                </tr>
-                <tr>
-                    <td className="border-r-2 border-b-2">Autoridades jurisdiccionales estatales o federales.</td>
-                    <td className="border-r-2 border-b-2">México</td>
-                    <td className="border-b-2">Cumplimiento de mandamiento judicial fundado y motivado.</td>
-                </tr>
-                <tr>
-                    <td className="border-r-2 border-b-2">Instituciones bancarias en general.</td>
-                    <td className="border-r-2 border-b-2">México</td>
-                    <td className="border-b-2">Dispersión de nómina y seguro de vida nómina.</td>
-                </tr>
-                <tr>
-                    <td className="border-r-2 border-b-2">Instituciones aseguradoras en general.​</td>
-                    <td className="border-r-2 border-b-2">México</td>
-                    <td className="border-b-2">Crámites de seguros particulares del trabajador.</td>
-                </tr>
-            </table>
-            
-            <h3 className="mb-2">IV. Los mecanismos, medios y procedimientos disponibles para ejercer los derechos ARCO.</h3>
+            <p className="mb-3">
+              La versión 2.0.0 de Calcula UAT no requiere como parte de su modelo
+              funcional datos tales como:
+            </p>
 
-            <p className="mb-3 text-sm">Para el ejercicio de los derechos ARCO (acceso, rectificación, cancelación y oposición) Usted podrá realizarlos mediante la Plataforma Nacional de Transparencia, sito en https://www.sisaitamaulipas.org/sisaitamaulipas/; correo electrónico transparencia@uat.edu.mx correspondiente a la Unidad de Transparencia de la Universidad Autónoma de Tamaulipas.</p>
+            <ul className="list-disc pl-6 mb-4">
+              <li>CURP o RFC.</li>
+              <li>Domicilio particular.</li>
+              <li>Información bancaria o patrimonial.</li>
+              <li>Huella digital o reconocimiento facial.</li>
+              <li>Información médica o de salud.</li>
+              <li>Datos de nómina.</li>
+              <li>Pasaporte o licencia de conducir.</li>
+              <li>Geolocalización.</li>
+            </ul>
 
-            <h3 className="mb-2">V. El domicilio de la Unidad de Transparencia.</h3>
+            <h2 className="text-xl font-semibold mb-2">
+              3. Finalidades
+            </h2>
 
-            <p className="mb-3">{"Universidad Autónoma de Tamaulipas.\nUnidad de Transparencia.\nResponsable: Lic. César Abraham Ramírez Rosas.\nHorario 9:00 a 16:00 horas.\nDomicilio: Calle Cristóbal Colón, entre Miguel Hidalgo y Benito Juárez, Zona Centro, C.P. 87000, Victoria, Tamaulipas.\nNúmero telefónico oficial: (834)318-1805.\nCorreo electrónico oficial: transparencia@uat.edu.mx"}</p>
+            <p className="mb-3">
+              La información procesada por Calcula UAT se utiliza para:
+            </p>
 
-            <h3 className="mb-2">VI. Cambios al aviso de privacidad.</h3>
+            <ul className="list-disc pl-6 mb-4">
+              <li>permitir el acceso institucional al prototipo;</li>
+              <li>organizar contenido por nivel académico, categoría y dificultad;</li>
+              <li>presentar ejercicios matemáticos en la aplicación móvil;</li>
+              <li>registrar el número de intentos y tiempo de resolución;</li>
+              <li>generar estadísticas descriptivas sobre las interacciones;</li>
+              <li>
+                apoyar actividades educativas, de evaluación del software y de
+                investigación autorizadas para el proyecto.
+              </li>
+            </ul>
 
-            <p className="mb-3">En caso de que aplicar modificaciones a este aviso de privacidad, se notificará a través de medios electrónicos, como el portal de internet del Responsable, sito en www.uat.edu.mx, o bien, el correo electrónico institucional y/o personal.</p>
+            <h2 className="text-xl font-semibold mb-2">
+              4. Almacenamiento y procesamiento
+            </h2>
 
-            <h3>VII. Disposiciones generales.</h3>
-            <p className="mb-3">{"1. El presente Aviso tiene por objeto informar, a la comunidad universitaria (aspirantes, alumnos, egresados, personal directivo, personal docente, personal administrativo, así como proveedores de bienes y servicios) los propósitos principales del tratamiento al que serán sometidos sus datos personales, mediante su tratamiento legítimo, controlado e informado, conforme a la fracción I del artículo 3 de la Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Tamaulipas, en lo sucesivo “la Ley”.\n2. Datos Personales son cualquier información concerniente a una persona física identificada o identificable. Se considera que una persona es identificable cuando su identidad pueda determinarse directa o indirectamente a través de cualquier información, en términos de la fracción VII del artículo 3 de la Ley; los responsables de recabar los datos personales son las áreas académicas, administrativas, escolares, financieras y legales de la Universidad Autónoma de Tamaulipas.\n3. Al proporcionar datos personales por escrito, a través de una solicitud, formato en papel, formato digital, correo electrónico, registro biométrico o cualquier otro medio o documento, ACEPTA Y AUTORIZA A LA UNIVERSIDAD AUTÓNOMA DE TAMAULIPAS A UTILIZAR Y TRATAR DE FORMA AUTOMATIZADA SUS DATOS PERSONALES E INFORMACIÓN SUMINISTRADOS, los cuales formarán parte de la base de datos con la finalidad de usarlos, de manera enunciativa, más no limitativa, para: identificar, ubicar, comunicar, contactar, enviar información y/o beneficios públicos, elaboración de estadísticas científicas o de interés general previstas en ley, así como para los trámites inherentes a las funciones académicas y administrativas de la Universidad Autónoma de Tamaulipas, sus planes y programas que se implementen en la comunidad universitaria, conforme al artículo 14 de la Ley.\n4. Mediante la aceptación y autorización para el tratamiento de tus datos personales en los términos antes señalados, autoriza a la Universidad Autónoma de Tamaulipas expresamente a transferirlos a autoridades de cualquier nivel (Federales, Estatales, Municipales), organismos públicos, dentro y fuera de México, con el propósito, de manera enunciativa más no limitativa, de certificar estudios y competencias, así como para participar en sus procesos de selección de personal y, en su caso, aplicar a los diversos puestos de trabajo vacantes que éstas publiquen en nuestra Bolsa de Trabajo; y autoriza a la Universidad Autónoma de Tamaulipas expresamente a poder emitir y entregar documentación oficial o no, a padres o representantes legales.\n5. La temporalidad del manejo de los datos personales será indefinida a partir de la fecha en que nos los proporcione, pudiendo oponerse al manejo de los mismos en cualquier momento que lo considere, con las limitaciones de Ley; en caso de que su solicitud de oposición sea procedente, la Universidad Autónoma de Tamaulipas dejará de manejar datos personales sin ninguna responsabilidad de nuestra parte. Quedan fuera de este supuesto las Bases de Datos referentes a las calificaciones y demás información académica de los alumnos, exalumnos y egresados de la Universidad Autónoma de Tamaulipas, y alumnos en movilidad o en intercambio provenientes de otras instituciones.\n6. La Universidad Autónoma de Tamaulipas, responsable del tratamiento de datos personales, está obligada a cumplir con los principios de licitud, finalidad, lealtad, consentimiento, calidad, proporcionalidad, información y responsabilidad en el tratamiento de datos personales, conforme al artículo 13 de la Ley; por tal motivo, la Universidad Autónoma de Tamaulipas se compromete a adoptar las medidas necesarias para mantener exactos, completos, correctos y actualizados los datos personales en su posesión, a fin de que no se altere la veracidad de éstos; así como a establecer y mantener las medidas de seguridad de carácter administrativo, físico y técnico para la protección de los datos personales, que permitan protegerlos contra daño, pérdida, alteración, destrucción o su uso, acceso o tratamiento no autorizado, así como garantizar su confidencialidad, integridad y disponibilidad, de acuerdo a los artículos 28 y 46 de la Ley.\n7. En el caso de los aspirantes para cursar alguna carrera o posgrado que imparte la Universidad Autónoma de Tamaulipas, el hecho de cubrir el pago de inscripción y seleccionar asignaturas, constituye un hecho que manifiesta el consentimiento expreso del contenido del presente Aviso de Privacidad."}</p>
+            <p className="mb-4">
+              Calcula UAT utiliza Google Firebase Cloud Firestore como capa de
+              almacenamiento compartida entre la aplicación web y la aplicación
+              móvil. La aplicación Android también utiliza persistencia local de
+              Firestore para apoyar su funcionamiento durante interrupciones
+              temporales de conectividad.
+            </p>
 
-            <h3 className="mb-3">VIII. Eliminación y conservación de los datos de esta plataforma.</h3>
+            <h2 className="text-xl font-semibold mb-2">
+              5. Datos de interacción
+            </h2>
 
-            <p>Esta plataforma conserva los datos con los fines aplicables a las normas anteriormente establecidas, sin embargo, el usuario puede solicitar la eliminación completa de sus datos relacionados enviando un correo electrónico al desarrollador a la dirección kevin_mendoza092@hotmail.com</p>
+            <p className="mb-4">
+              Los registros de interacción almacenados por la aplicación móvil
+              incluyen la clave institucional, el identificador del problema, el
+              número de intentos, el tiempo de resolución y la fecha de la
+              interacción. La versión actual no incorpora en esos registros un
+              nombre individual del estudiante.
+            </p>
+
+            <h2 className="text-xl font-semibold mb-2">
+              6. Seguridad y limitaciones del prototipo
+            </h2>
+
+            <p className="mb-4">
+              Calcula UAT v2.0.0 es un prototipo de software de investigación.
+              El mecanismo actual de acceso institucional no debe considerarse un
+              sistema de gestión de identidad de nivel productivo. Los despliegues
+              futuros deberán utilizar autenticación gestionada, políticas de
+              autorización más granulares y reglas de acceso adecuadas en
+              Cloud Firestore.
+            </p>
+
+            <h2 className="text-xl font-semibold mb-2">
+              7. Conservación y eliminación
+            </h2>
+
+            <p className="mb-4">
+              Los periodos de conservación de información deben establecerse de
+              acuerdo con el propósito del despliegue, el protocolo de investigación
+              aplicable y las disposiciones institucionales correspondientes.
+              Calcula UAT v2.0.0 no incorpora actualmente un mecanismo automático
+              de autoservicio para la eliminación de registros.
+            </p>
+
+            <h2 className="text-xl font-semibold mb-2">
+              8. Derechos y contacto institucional
+            </h2>
+
+            <p className="mb-4">
+              Las solicitudes relacionadas con protección de datos personales y
+              ejercicio de derechos deberán atenderse mediante los mecanismos
+              institucionales correspondientes de la Universidad Autónoma de
+              Tamaulipas. La Unidad de Transparencia puede ser contactada mediante:
+            </p>
+
+            <p className="mb-4">
+              Correo electrónico: <strong>transparencia@uat.edu.mx</strong>
+            </p>
+
+            <h2 className="text-xl font-semibold mb-2">
+              9. Contacto del proyecto
+            </h2>
+
+            <p className="mb-4">
+              Para consultas técnicas o académicas relacionadas con Calcula UAT:
+            </p>
+
+            <p>
+              Ángel Mario Lerma-Sánchez<br/>
+              Unidad Académica Multidisciplinaria Mante<br/>
+              Universidad Autónoma de Tamaulipas<br/>
+              <strong>amlerma@docentes.uat.edu.mx</strong>
+            </p>
+
+            <p className="text-sm text-gray-600 mt-6">
+              Calcula UAT v2.0.0 · Research software prototype
+            </p>
+
           </div>
-          
+
         </div>
 
       </div>
 
     </div>
-  )
+  );
 }
