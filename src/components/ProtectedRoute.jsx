@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Loading from './Loading';
-import { getTwoQueryCollection } from '@/services/firebase';
+import { getOneQueryCollection } from '@/services/firebase';
 
 function ProtectedRoute(Component) 
 {
@@ -17,17 +17,22 @@ function ProtectedRoute(Component)
     const router = useRouter();
 
     const authUser = async () =>
-    {
-      const institutionData = await getTwoQueryCollection('institutions', ['scholarKey', 'password'], ['==', '=='], [user.scholarKey, user.password]);
-      
-      if(institutionData.length <= 0)
-      {
-        setUserFound(false);
-        return;
-      }
-
-      setLoading(false);
-    } 
+          {
+              const institutionData = await getOneQueryCollection(
+                  'institutions',
+                  'scholarKey',
+                  '==',
+                  user.scholarKey
+              );
+          
+              if(institutionData.length <= 0)
+              {
+                  setUserFound(false);
+                  return;
+              }
+          
+              setLoading(false);
+          }
 
     useEffect(() =>
     {
