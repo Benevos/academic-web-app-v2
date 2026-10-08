@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import { getFirestore, collection, addDoc, getDoc, getDocs, where, query, onSnapshot, deleteDoc, updateDoc, doc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -18,8 +17,6 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
-
 const db = getFirestore();
 
 export async function getCollection(collectionName)
@@ -28,25 +25,6 @@ export async function getCollection(collectionName)
     const data = collectionRef.docs.map(doc => doc.data());
 
     return data;
-}
-
-export async function getSingleQueryCollection(collectionName, attribute, operator, value)
-{
-  const collectionRef = collection(db, collectionName);
-  const querySnapshot =  query(collectionRef, where(attribute, operator, value));
-  const docs = await getDocs(querySnapshot);
-
-  const data = docs.docs.map(doc => 
-    {
-      const documentContent = doc.data();
-      const documentId = doc.id;
-
-      const newData = { id: documentId, ...documentContent };
-
-      return newData;
-    });
-
-  return data;
 }
 
 export function onGetCollection(collectionName,callback)
