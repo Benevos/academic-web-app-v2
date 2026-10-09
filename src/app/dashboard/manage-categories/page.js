@@ -450,77 +450,130 @@ function ManageCategories()
         }
     };
 
-    const handleDelete = async (category) =>
-    {
-        const confirmed = window.confirm(
-            `ADVERTENCIA: esta acción no se puede revertir.\n\nLa categoría "${category.name}" y los problemas asociados serán eliminados.\n\n¿Desea continuar?`
-        );
-
-        if(!confirmed)
+const handleDelete = async (category) =>
         {
-            return;
-        }
-
-        try
-        {
-            const relatedProblems =
-                await getTwoQueryCollection(
-                    'problems',
-                    ['category', 'scholarKey'],
-                    ['==', '=='],
-                    [
-                        category.name,
-                        category.scholarKey
-                    ]
-                );
-
-            await Promise.all(
-                relatedProblems.map(
-                    (problem) =>
-                        deleteDocument(
-                            'problems',
-                            problem.id
-                        )
-                )
+            const confirmed = window.confirm(
+                `ADVERTENCIA: esta acción no se puede revertir.\n\nLa categoría "${category.name}", sus problemas y los registros de interacción asociados serán eliminados.\n\n¿Desea continuar?`
             );
-
-            await deleteDocument(
-                'categories',
-                category.id
-            );
-
-            await loadCategories(
-                category.scholarKey
-            );
-
-            if(
-                editingCategory?.id === category.id
-            )
+        
+            if(!confirmed)
             {
-                resetForm(
+                return;
+            }
+        
+            try
+            {
+                showDialog({
+                    title: 'Eliminando categoría',
+                    message: 'Por favor, espere',
+                    color: 'primary',
+                    disabled: true
+                });
+        
+                const relatedProblems =
+                    await getTwoQueryCollection(
+                        'problems',
+                        ['category', 'scholarKey'],
+                        ['==', '=='],
+                        [
+                            category.name,
+                            category.scholarKey
+                        ]
+                    );
+        
+                /*
+                 * Retrieve the response records associated
+                 * with each problem before deleting the
+                 * problems themselves.
+                 */
+                const responseGroups =
+                    await Promise.all(
+                        relatedProblems.map(
+                            (problem) =>
+                                getOneQueryCollection(
+                                    'responses',
+                                    'problemId',
+                                    '==',
+                                    problem.id
+                                )
+                        )
+                    );
+        
+                const relatedResponses =
+                    responseGroups
+                        .flat()
+                        .filter(
+                            (response) =>
+                                response.scholarKey ===
+                                category.scholarKey
+                        );
+        
+                /*
+                 * Delete the interaction records first.
+                 */
+                await Promise.all(
+                    relatedResponses.map(
+                        (response) =>
+                            deleteDocument(
+                                'responses',
+                                response.id
+                            )
+                    )
+                );
+        
+                /*
+                 * Delete the mathematical problems.
+                 */
+                await Promise.all(
+                    relatedProblems.map(
+                        (problem) =>
+                            deleteDocument(
+                                'problems',
+                                problem.id
+                            )
+                    )
+                );
+        
+                /*
+                 * Finally, delete the category itself.
+                 */
+                await deleteDocument(
+                    'categories',
+                    category.id
+                );
+        
+                await loadCategories(
                     category.scholarKey
                 );
+        
+                if(
+                    editingCategory?.id ===
+                    category.id
+                )
+                {
+                    resetForm(
+                        category.scholarKey
+                    );
+                }
+        
+                showDialog({
+                    title: 'Categoría eliminada',
+                    message:
+                        'La categoría, sus problemas y los registros de interacción asociados fueron eliminados correctamente',
+                    color: 'primary',
+                    disabled: false
+                });
             }
-
-            showDialog({
-                title: 'Categoría eliminada',
-                message:
-                    'La categoría y sus problemas asociados fueron eliminados',
-                color: 'primary',
-                disabled: false
-            });
-        }
-        catch(error)
-        {
-            showDialog({
-                title: 'Error',
-                message: error.message,
-                color: 'error',
-                disabled: false
-            });
-        }
-    };
-
+            catch(error)
+            {
+                showDialog({
+                    title: 'Error',
+                    message: error.message,
+                    color: 'error',
+                    disabled: false
+                });
+            }
+        };
     const handleUpdate = (category) =>
     {
         setEditingCategory({
