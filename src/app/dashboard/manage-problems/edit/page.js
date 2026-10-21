@@ -1,7 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import TopFiller from '@/components/PageTop/TopFiller';
 import Navbar from '@/components/PageTop/Navbar';
@@ -10,442 +10,987 @@ import FormTitle from '@/components/FormTitle';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Previsualization from '@/components/Previsualization';
 import Dialog from '@/components/Dialog';
-
-import { getDocument, getOneQueryCollection, updateDocument } from '@/services/firebase';
-
-import { AiFillFileAdd } from "react-icons/ai";
-import { SiLatex } from "react-icons/si";
-import { TbMath } from "react-icons/tb";
-import { MdLiveHelp } from "react-icons/md";
-
-import { Lora } from 'next/font/google';
-import { MathJax, MathJaxContext } from 'better-react-mathjax';
-import { useRouter, useSearchParams } from 'next/navigation';
 import Loading from '@/components/Loading';
 
-const lora = Lora({ subsets: ['latin'] });
+import {
+  getDocument,
+  getOneQueryCollection,
+  updateDocument
+} from '@/services/firebase';
 
-function EditProblem() 
+import { AiFillFileAdd } from 'react-icons/ai';
+import { SiLatex } from 'react-icons/si';
+import { TbMath } from 'react-icons/tb';
+import { MdLiveHelp } from 'react-icons/md';
+
+import { Lora } from 'next/font/google';
+import {
+  MathJax,
+  MathJaxContext
+} from 'better-react-mathjax';
+
+const lora = Lora({
+  subsets: ['latin']
+});
+
+const emptyProblem = {
+  title: '',
+  paragraph: '',
+  category: '',
+  subcategory: '',
+  difficulty: '',
+  academicLevel: '',
+  answers: ['', '', '', ''],
+  solution: '',
+  scholarKey: ''
+};
+
+function EditProblem()
 {
-  const searchParams = useSearchParams();
   const router = useRouter();
 
-  const problemId = searchParams.get('id');
+  const [problemId, setProblemId] = useState('');
+  const [problem, setProblem] = useState(emptyProblem);
 
-  const [problem, setProblem] = useState({
-    title: '',
-    paragraph: '',
-    category: '',
-    subcategory: '',
-    difficulty: '',
-    academicLevel: '',
-    answers: [],
-    solution: '',
-    scholarKey: '',
-  });
-
-  const [dialogConfig, setDialogConfig] = useState({
-    title: '', 
-    message: '', 
-    showButton: true, 
-    color: 'primary', 
-    disabled: false
-  })
-
-  const [problemExists , setProblemExists] = useState(true);
-  const [newAnswers, setNewAnswers] = useState(['', '', '', '']);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [academicLevels, setAcademicLevels] = useState([]);
-  const [activeInput, setActiveInput] = useState(null);
 
-  const paragraphRef = useRef(null);
-  
-  const getInitialData = async () =>
+  const [loading, setLoading] = useState(true);
+  const [problemExists, setProblemExists] = useState(true);
+
+  const [activeTarget, setActiveTarget] = useState({
+    type: 'field',
+    name: 'paragraph'
+  });
+
+  const [dialogConfig, setDialogConfig] = useState({
+    title: '',
+    message: '',
+    showButton: true,
+    color: 'primary',
+    disabled: false
+  });
+
+  const showDialog = (config) =>
   {
-    
+    setDialogConfig((previousConfig) => ({
+      ...previousConfig,
+      ...config
+    }));
 
-    const problemData = await getDocument('problems', problemId);
+    const dialog =
+      document.getElementById('dialog');
 
-    if(problemData === undefined)
+    if(dialog && !dialog.open)
     {
-      setProblemExists(false);
+      dialog.showModal();
+    }
+  };
+
+  useEffect(() =>
+  {
+    const getInitialData = async () =>
+    {
+      try
+      {
+        const queryParameters =
+          new URLSearchParams(
+            window.location.search
+          );
+
+        const currentProblemId =
+          queryParameters.get('id');
+
+        if(!currentProblemId)
+        {
+          setProblemExists(false);
+
+          router.replace(
+            '/dashboard/manage-problems'
+          );
+
+          return;
+        }
+
+        setProblemId(currentProblemId);
+
+        const storedSession =
+          localStorage.getItem('sessionData');
+
+        if(!storedSession)
+        {
+          setProblemExists(false);
+
+          router.replace('/login');
+
+          return;
+        }
+
+        const sessionData =
+          JSON.parse(storedSession);
+
+        const scholarKey =
+          sessionData?.scholarKey || '';
+
+        if(!scholarKey)
+        {
+          setProblemExists(false);
+
+          router.replace('/login');
+
+          return;
+        }
+
+        const problemData =
+          await getDocument(
+            'problems',
+            currentProblemId
+          );
+
+        if(
+          !problemData ||
+          problemData.scholarKey !== scholarKey
+        )
+        {
+          setProblemExists(false);
+
+          router.replace(
+            '/dashboard/manage-problems'
+          );
+
+          return;
+        }
+
+        const [
+          categoriesCollection,
+          institutionsCollection
+        ] = await Promise.all([
+          getOneQueryCollection(
+            'categories',
+            'scholarKey',
+            '==',
+            scholarKey
+          ),
+
+          getOneQueryCollection(
+            'institutions',
+            'scholarKey',
+            '==',
+            scholarKey
+          )
+        ]);
+
+        const institution =
+          institutionsCollection[0];
+
+        const enabledAcademicLevels =
+          institution?.academicLevel
+            ?.filter(
+              (level) => level !== null
+            ) || [];
+
+        const currentCategory =
+          categoriesCollection.find(
+            (category) =>
+              category.name ===
+              problemData.category
+          );
+
+        const currentSubcategories =
+          currentCategory?.subcategories || [];
+
+        const normalizedAnswers =
+          Array.isArray(problemData.answers)
+            ? [
+                problemData.answers[0] || '',
+                problemData.answers[1] || '',
+                problemData.answers[2] || '',
+                problemData.answers[3] || ''
+              ]
+            : ['', '', '', ''];
+
+        setCategories(categoriesCollection);
+        setSubcategories(currentSubcategories);
+        setAcademicLevels(
+          enabledAcademicLevels
+        );
+
+        setProblem({
+          title: problemData.title || '',
+          paragraph:
+            problemData.paragraph || '',
+          category:
+            problemData.category || '',
+          subcategory:
+            problemData.subcategory || '',
+          difficulty:
+            problemData.difficulty || '',
+          academicLevel:
+            problemData.academicLevel || '',
+          answers: normalizedAnswers,
+          solution:
+            problemData.solution !== undefined
+              ? String(
+                  problemData.solution
+                )
+              : '',
+          scholarKey
+        });
+      }
+      catch(error)
+      {
+        showDialog({
+          title: 'Error',
+          message: error.message,
+          color: 'error',
+          disabled: false
+        });
+      }
+      finally
+      {
+        setLoading(false);
+      }
+    };
+
+    getInitialData();
+  }, [router]);
+
+  const handleChange = ({
+    target: { name, value }
+  }) =>
+  {
+    if(name === 'category')
+    {
+      const currentCategory =
+        categories.find(
+          (category) =>
+            category.name === value
+        );
+
+      const availableSubcategories =
+        currentCategory?.subcategories || [];
+
+      setSubcategories(
+        availableSubcategories
+      );
+
+      let newSubcategory = '';
+
+      if(
+        availableSubcategories.includes(
+          'all'
+        )
+      )
+      {
+        newSubcategory = 'all';
+      }
+      else if(
+        availableSubcategories.length > 0
+      )
+      {
+        newSubcategory =
+          availableSubcategories[0];
+      }
+
+      setProblem(
+        (previousProblem) => ({
+          ...previousProblem,
+          category: value,
+          subcategory: newSubcategory
+        })
+      );
+
       return;
     }
 
-    const scholarKey = JSON.parse(localStorage.getItem('sessionData')).scholarKey;
-    const categoriesCollection = await getOneQueryCollection('categories', 'scholarKey', '==', scholarKey);
-    const institutionsCollection = await getOneQueryCollection('institutions', 'scholarKey', '==', scholarKey);
-    const instutionAcademicLevels = institutionsCollection[0].academicLevel;
-    
-    setAcademicLevels(instutionAcademicLevels);
-    setCategories(categoriesCollection);
-    setProblem(problemData);
-    setNewAnswers(problemData.answers);
+    setProblem(
+      (previousProblem) => ({
+        ...previousProblem,
+        [name]: value
+      })
+    );
+  };
 
-    const titleInput = document.querySelector('input[name="title"]');
-    const paragraphInput = document.querySelector('textarea[name="paragraph"]');
-    const categorySelect = document.querySelector('select[name="category"]');
-    const subcategorySelect = document.querySelector('select[name="subcategory"]');
-    const difficultySelect = document.querySelector('select[name="difficulty"]');
-    const academicLevelSelect = document.querySelector('select[name="academicLevel"]');
-    const solutionSelect = document.querySelector('select[name="solution"]');
-    const answerTextareas = document.querySelectorAll('.create-problem-answer');
+  const handleAnswerChange = ({
+    target: {
+      value,
+      dataset: { index }
+    }
+  }) =>
+  {
+    const answerIndex =
+      Number(index);
 
-    titleInput.value = problemData.title;
-    paragraphInput.value = problemData.paragraph;
-    categorySelect.value = problemData.category;
-    subcategorySelect.value = problemData.subcategory;
-    difficultySelect.value = problemData.difficulty;
-    academicLevelSelect.value = problemData.academicLevel;
-    solutionSelect.value = problemData.solution;
+    setProblem(
+      (previousProblem) =>
+      {
+        const updatedAnswers =
+          [...previousProblem.answers];
 
-    answerTextareas.forEach((textarea, index) =>
-    {
-      textarea.value = problemData.answers[index];
+        updatedAnswers[
+          answerIndex
+        ] = value;
+
+        return {
+          ...previousProblem,
+          answers: updatedAnswers
+        };
+      }
+    );
+  };
+
+  const handleFieldFocus = (name) =>
+  {
+    setActiveTarget({
+      type: 'field',
+      name
     });
+  };
 
-  }
-
-  const handleChange = ({ target: { name, value } }) =>
+  const handleAnswerFocus = (index) =>
   {
-    setProblem({...problem, [name]: value});
-  }
-
-  const handleAnswerChange = ( { target: { value, dataset: { index }  } } ) =>
-  {
-    const tempAnswers = [...newAnswers];
-    tempAnswers[index] = value;
-
-    setNewAnswers(tempAnswers);
-  }
-
-  const handleInputFocus = ({ target }) =>
-  {
-    setActiveInput(target);
-  }
+    setActiveTarget({
+      type: 'answer',
+      index
+    });
+  };
 
   const handleAddLaTeXClick = () =>
   {
-    console.log(activeInput.className);
-    if(activeInput.className === 'create-problem-answer' || activeInput.className === 'create-problem-answer-error')
+    const latexTemplate =
+      '\\(Escriba \\; LaTeX \\; aquí\\)';
+
+    if(activeTarget.type === 'answer')
     {
-      console.log('Ejecucion')
-      const index = activeInput.dataset.index;
-      const tempAnswers = [...newAnswers];
-      tempAnswers[index] += '\\(Escriba \\; LaTeX \\; aquí\\)';
-      activeInput.value = tempAnswers[index]
-      setNewAnswers(tempAnswers);
+      setProblem(
+        (previousProblem) =>
+        {
+          const updatedAnswers =
+            [...previousProblem.answers];
+
+          updatedAnswers[
+            activeTarget.index
+          ] =
+            updatedAnswers[
+              activeTarget.index
+            ] + latexTemplate;
+
+          return {
+            ...previousProblem,
+            answers: updatedAnswers
+          };
+        }
+      );
+
       return;
     }
 
-    activeInput.value += '\\(Escriba \\; LaTeX \\; aquí\\)';
-    
-    setProblem({...problem, [activeInput.name]: activeInput.value})
-  }
-
-  const validateNotEmpty = (elements, className, comparsionValue) =>
-  {
-    let error = false;
-    elements.forEach((element) =>
+    if(
+      activeTarget.name !== 'title' &&
+      activeTarget.name !== 'paragraph'
+    )
     {
-      if(element.value.trim() === comparsionValue)
-      {
-        element.className = className + '-error';
-        error = true;
-        return;
-      }
+      return;
+    }
 
-      element.className = className;
-    })
+    setProblem(
+      (previousProblem) => ({
+        ...previousProblem,
+        [activeTarget.name]:
+          previousProblem[
+            activeTarget.name
+          ] + latexTemplate
+      })
+    );
+  };
 
-    return error;
+  const validateProblem = () =>
+  {
+    const requiredFields = [
+      problem.title,
+      problem.paragraph,
+      problem.category,
+      problem.subcategory,
+      problem.difficulty,
+      problem.academicLevel,
+      problem.solution
+    ];
+
+    const hasEmptyField =
+      requiredFields.some(
+        (value) =>
+          typeof value !== 'string' ||
+          value.trim() === ''
+      );
+
+    const hasInvalidAnswers =
+      !Array.isArray(
+        problem.answers
+      ) ||
+      problem.answers.length !== 4 ||
+      problem.answers.some(
+        (answer) =>
+          typeof answer !== 'string' ||
+          answer.trim() === ''
+      );
+
+    const validSolutions = [
+      '1',
+      '2',
+      '3',
+      '4'
+    ];
+
+    const hasInvalidSolution =
+      !validSolutions.includes(
+        problem.solution
+      );
+
+    return (
+      !hasEmptyField &&
+      !hasInvalidAnswers &&
+      !hasInvalidSolution
+    );
   };
 
   const handleSubmit = async (e) =>
   {
     e.preventDefault();
 
-    const dialog = document.getElementById('dialog');
-    const inputs = document.querySelectorAll('input');
-    const normalTextareas = document.querySelectorAll('.create-problem-textarea');
-    const errorTextareas = document.querySelectorAll('.create-problem-textarea-error');
-    const normalAnswers = document.querySelectorAll('.create-problem-answer');
-    const errorAnswers = document.querySelectorAll('.create-problem-answer-error');
-    const selects = document.querySelectorAll('select');
-
-    let inputsError = validateNotEmpty(inputs, 'create-problem-input', '');
-    let selectsError = validateNotEmpty(selects, 'create-problem-select', 'default');
-    let normalTextareasError = validateNotEmpty(normalTextareas, 'create-problem-textarea', '');
-    let normalAnswersError = validateNotEmpty(normalAnswers, 'create-problem-answer', '');
-
-    for (let i = 0; i < errorTextareas.length; i++) 
+    if(!problemId)
     {
-      if(errorTextareas[i].value.trim() !== '')
-      {
-        errorTextareas[i].className = 'create-problem-textarea resize-y';
-        normalTextareasError = false;
-      }
-      else
-      {
-        errorTextareas[i].className = 'create-problem-textarea-error resize-y'
-      }
+      return;
     }
 
-    for(let i = 0; i < errorAnswers.length; i++)
+    if(!validateProblem())
     {
-      if(errorAnswers[i].value.trim() !== '')
-      {
-        errorAnswers[i].className = 'create-problem-answer';
-        normalAnswersError = false;
-      }
-      else
-      {
-        errorAnswers[i].className = 'create-problem-answer-error';
-      }
-    }
+      showDialog({
+        title: 'Error',
+        message:
+          'Complete todos los campos del problema',
+        color: 'error',
+        disabled: false
+      });
 
-    if(inputsError || normalTextareasError || selectsError || normalAnswersError )
-    {
-      setDialogConfig({title: 'Error', message: 'No deje espacios vacios', color: 'error'});
-      dialog.showModal();
       return;
     }
 
     try
     {
-      setDialogConfig({title: 'Registrando problema...', message: 'Por favor, espere', color: 'primary', disabled: true});
-      dialog.showModal();
-
-      await updateDocument('problems', problemId, problem)
-
-      setDialogConfig({title: 'Éxito', message: 'Problema actualizado con éxito', disabled: false});
-
-      inputs.forEach(element => element.value = '');
-      normalTextareas.forEach(element => element.value = '');
-      normalAnswers.forEach(element => element.value = '');
-      selects.forEach(element => element.value = 'default');
-
-      setProblem({
-        title: '',
-        paragraph: '',
-        category: '',
-        subcategory: '',
-        difficulty: '',
-        academicLevel: '',
-        answers: [],
-        solution: '',
-        scholarKey: problem.scholarKey,
+      showDialog({
+        title:
+          'Actualizando problema...',
+        message:
+          'Por favor, espere',
+        color: 'primary',
+        disabled: true
       });
 
-      setNewAnswers(['', '', '', '']);
+      const updatedProblem = {
+        scholarKey:
+          problem.scholarKey,
+
+        title:
+          problem.title.trim(),
+
+        paragraph:
+          problem.paragraph.trim(),
+
+        category:
+          problem.category,
+
+        subcategory:
+          problem.subcategory,
+
+        difficulty:
+          problem.difficulty,
+
+        academicLevel:
+          problem.academicLevel,
+
+        answers:
+          problem.answers.map(
+            (answer) =>
+              answer.trim()
+          ),
+
+        solution:
+          problem.solution
+      };
+
+      await updateDocument(
+        'problems',
+        problemId,
+        updatedProblem
+      );
+
+      setProblem(updatedProblem);
+
+      setDialogConfig({
+        title: 'Éxito',
+        message:
+          'Problema actualizado correctamente',
+        showButton: true,
+        color: 'primary',
+        disabled: false
+      });
     }
-    catch({ message })
+    catch(error)
     {
-      setDialogConfig({title: 'Error', message: message, color: 'error'})
-      dialog.showModal();
+      showDialog({
+        title: 'Error',
+        message: error.message,
+        color: 'error',
+        disabled: false
+      });
     }
+  };
+
+  const getAcademicLevelLabel =
+    (level) =>
+    {
+      switch(level)
+      {
+        case 'college':
+          return 'Universidad';
+
+        case 'high':
+          return 'Preparatoria';
+
+        case 'middle':
+          return 'Secundaria';
+
+        case 'elementary':
+          return 'Primaria';
+
+        default:
+          return level;
+      }
+    };
+
+  if(loading)
+  {
+    return (
+      <Loading message='Cargando problema...'/>
+    );
   }
 
-  useEffect(() =>
+  if(!problemExists)
   {
-    getInitialData();
-    
-    const paragraph = paragraphRef.current;
-    setActiveInput(paragraph);
-  }, []);
-
-  useEffect(() =>
-  {
-    setProblem({...problem, subcategory: 'all'})
-
-    if(problem.category.trim() === '')
-    {
-      return;
-    }
-
-    const currentCategoryDoc = categories.filter(category => category.name === problem.category)[0];
-  
-    setSubcategories(currentCategoryDoc.subcategories);
-
-  }, [problem.category])
-
-  useEffect(() =>
-  {
-    setProblem({...problem, answers: newAnswers});
-  }, [newAnswers])
-
-  useEffect(() =>
-  {
-    if(!problemExists)
-    {
-      router.back();
-    }
-  }, [problemExists]);
-
-  if(!problemId)
-  {
-    router.back();
-    
-    return(
-      <Loading message='El problema no existe, redireccionando...'/>
-    )
+    return (
+      <Loading message='El problema no existe o no pertenece a esta institución. Redireccionando...'/>
+    );
   }
 
-  return !problemExists ? <Loading message='El problema no existe, redireccionando...'/> : (
+  return (
     <div>
+
       <MathJaxContext>
-        <Dialog 
-          title={dialogConfig.title} 
-          message={dialogConfig.message} 
-          showButton={dialogConfig.showButton}
+
+        <Dialog
+          title={dialogConfig.title}
+          message={dialogConfig.message}
+          showButton={
+            dialogConfig.showButton
+          }
           color={dialogConfig.color}
-          disabled={dialogConfig.disabled}/>
+          disabled={
+            dialogConfig.disabled
+          }
+        />
 
-          <div onClick={handleAddLaTeXClick} className='insert-latex'>
+        <div
+          onClick={handleAddLaTeXClick}
+          className='insert-latex'
+        >
 
-            <p className='text-xs'>Insertar</p>
-            <p className={lora.className + ' text-xl'}>LaTeX</p>
+          <p className='text-xs'>
+            Insertar
+          </p>
 
-            <div className='w-full flex items-center justify-center text-3xl'>
-              <SiLatex/> <TbMath/>
-            </div>
+          <p
+            className={
+              lora.className +
+              ' text-xl'
+            }
+          >
+            LaTeX
+          </p>
+
+          <div className='w-full flex items-center justify-center text-3xl'>
+
+            <SiLatex/>
+            <TbMath/>
+
           </div>
+
+        </div>
 
         <Header/>
         <TopFiller/>
         <Navbar/>
 
-        
-
-        <form className='create-problem' onSubmit={handleSubmit}>
+        <form
+          className='create-problem'
+          onSubmit={handleSubmit}
+        >
 
           <div className='create-problem-info'>
-            
-              <p className='inline'><MdLiveHelp/>: Arrastre hacia bajo la esquina inferior derecha de las entradas de texto para expandirlas</p>
-          
+
+            <p className='inline'>
+              <MdLiveHelp/>: Arrastre hacia abajo la esquina inferior derecha de las entradas de texto para expandirlas.
+            </p>
+
           </div>
 
-            <div className='create-problem-content'>
+          <div className='create-problem-content'>
 
-                <FormTitle title='Actualizar problema' icon={<AiFillFileAdd/>}/>
+            <FormTitle
+              title='Actualizar problema'
+              icon={<AiFillFileAdd/>}
+            />
+
+            <h3>
+              Título:
+            </h3>
+
+            <input
+              className='create-problem-input'
+              name='title'
+              value={problem.title}
+              onChange={handleChange}
+              onFocus={
+                () =>
+                  handleFieldFocus(
+                    'title'
+                  )
+              }
+            />
+
+            <h3>
+              Planteamiento:
+            </h3>
+
+            <textarea
+              name='paragraph'
+              className='create-problem-textarea resize-y'
+              value={problem.paragraph}
+              onChange={handleChange}
+              onFocus={
+                () =>
+                  handleFieldFocus(
+                    'paragraph'
+                  )
+              }
+            />
+
+            <Previsualization
+              title='Previsualización del planteamiento'
+              value={
+                problem.paragraph
+              }
+            />
+
+            <div className='create-problem-selects'>
+
+              <div className='cp-select-container'>
 
                 <h3>
-                  Titulo:
+                  Categoría:
                 </h3>
 
-                <input className='create-problem-input' name='title' onChange={handleChange} onFocus={handleInputFocus}/>
+                <select
+                  className='create-problem-select'
+                  name='category'
+                  value={
+                    problem.category ||
+                    'default'
+                  }
+                  onChange={handleChange}
+                >
+
+                  <option
+                    value='default'
+                    disabled
+                  >
+                    (Seleccione categoría)
+                  </option>
+
+                  {
+                    categories.map(
+                      (category) =>
+                      (
+                        <option
+                          value={
+                            category.name
+                          }
+                          key={
+                            category.id ||
+                            category.name
+                          }
+                        >
+                          {
+                            category.name
+                          }
+                        </option>
+                      )
+                    )
+                  }
+
+                </select>
+
+              </div>
+
+              <div className='cp-select-container'>
 
                 <h3>
-                  Planteamiento:
+                  Subcategoría:
                 </h3>
 
-                <textarea ref={paragraphRef} name='paragraph' className='create-problem-textarea resize-y' onChange={handleChange} onFocus={handleInputFocus}/>
+                <select
+                  className='create-problem-select'
+                  name='subcategory'
+                  value={
+                    problem.subcategory ||
+                    'default'
+                  }
+                  onChange={handleChange}
+                  disabled={
+                    !problem.category
+                  }
+                >
 
-                <Previsualization title='Previsualización del planteamiento' value={problem.paragraph}/>
+                  <option
+                    value='default'
+                    disabled
+                  >
+                    (Seleccione subcategoría)
+                  </option>
 
-                <div className='create-problem-selects'>
-                  <div className='cp-select-container'> 
-                    <h3>Categoria:</h3>
+                  {
+                    subcategories.map(
+                      (
+                        subcategory,
+                        index
+                      ) =>
+                      (
+                        <option
+                          value={
+                            subcategory
+                          }
+                          key={
+                            `${subcategory}-${index}`
+                          }
+                        >
+                          {
+                            subcategory ===
+                            'all'
+                              ? 'General'
+                              : subcategory
+                          }
+                        </option>
+                      )
+                    )
+                  }
 
-                    <select className='create-problem-select' name='category' defaultValue={'default'} onChange={handleChange}>
-                      <option value={'default'} disabled>(Seleccione categoria)</option>
-                      {categories.map((category, index) => <option value={category.name} key={'cat'+index}>{category.name}</option>)}
-                    </select>
-                  </div>
-                  
-                  <div className='cp-select-container'> 
-                    <h3>Subcategoria:</h3>
+                </select>
 
-                    <select className='create-problem-select' name='subcategory' defaultValue={'default'} onChange={handleChange}>
-                      <option value={'default'} disabled>(Seleccione subcategoria)</option>
-                        {subcategories.map((subcategory, index) => <option value={subcategory} key={'subcat'+index}>{subcategory === 'all' ? 'General' : subcategory}</option>)}
-                    </select>
-                  </div>
+              </div>
 
-                  <div className='cp-select-container'> 
-                    <h3>Dificultad:</h3>
+              <div className='cp-select-container'>
 
-                    <select className='create-problem-select' name='difficulty' defaultValue={'default'} onChange={handleChange}>
-                      <option value={'default'} disabled>(Seleccione dificultad)</option>
-                      <option value={'easy'}>Facil</option>
-                      <option value={'normal'}>Normal</option>
-                      <option value={'hard'}>Dificil</option>
-                      <option value={'expert'}>Experto</option>
-                    </select>
-                  </div>
+                <h3>
+                  Dificultad:
+                </h3>
 
-                  <div className='cp-select-container'> 
-                    <h3>Nivel academico:</h3>
+                <select
+                  className='create-problem-select'
+                  name='difficulty'
+                  value={
+                    problem.difficulty ||
+                    'default'
+                  }
+                  onChange={handleChange}
+                >
 
-                    <select className='create-problem-select' name='academicLevel' defaultValue={'default'} onChange={handleChange}>
-                      <option value={'default'} disabled>(Seleccione nivel)</option>
-                      {academicLevels.map((level, index) => level !== null ? <option key={'lev'+index} value={level}>{level === 'college' ? 'Universidad' : level === 'high' ? 'Preparatoria' : level === 'middle' ? 'Secundaria' : level === 'elementary' ? 'Primaria' : 'None'}</option> : <React.Fragment key={'lev'+index}></React.Fragment>)}
-                    </select>
-                  </div>
+                  <option
+                    value='default'
+                    disabled
+                  >
+                    (Seleccione dificultad)
+                  </option>
 
-                </div>
+                  <option value='easy'>
+                    Fácil
+                  </option>
 
-                <h3>Respuestas:</h3>
+                  <option value='normal'>
+                    Normal
+                  </option>
 
-                <div className='create-problem-answer-container'>
-                  <textarea className='create-problem-answer' data-index={0} onChange={handleAnswerChange} onFocus={handleInputFocus}/>
-                  <div className='create-problem-answer-prev'>
-                    <h4 className='create-problem-answer-prev-title'>Previsualización de Respuesta 1</h4>
-                    <MathJax>
-                      {newAnswers[0]}
-                    </MathJax>
-                  </div>
-                </div>
+                  <option value='hard'>
+                    Difícil
+                  </option>
 
-                <div className='create-problem-answer-container'>
-                  <textarea className='create-problem-answer' data-index={1} onChange={handleAnswerChange} onFocus={handleInputFocus}/>
-                  <div className='create-problem-answer-prev'>
-                    <h4 className='create-problem-answer-prev-title'>Previsualización de Respuesta 2</h4>
-                    <MathJax>
-                      {newAnswers[1]}
-                    </MathJax>
-                  </div>
-                </div>
+                  <option value='expert'>
+                    Experto
+                  </option>
 
-                <div className='create-problem-answer-container'>
-                  <textarea className='create-problem-answer' data-index={2} onChange={handleAnswerChange} onFocus={handleInputFocus}/>
-                  <div className='create-problem-answer-prev'>
-                    <h4 className='create-problem-answer-prev-title'>Previsualización de Respuesta 3</h4>
-                    <MathJax>
-                      {newAnswers[2]}
-                    </MathJax>
-                  </div>
-                </div>
+                </select>
 
-                <div className='create-problem-answer-container'>
-                  <textarea className='create-problem-answer' data-index={3} onChange={handleAnswerChange} onFocus={handleInputFocus}/>
-                  <div className='create-problem-answer-prev'>
-                    <h4 className='create-problem-answer-prev-title'>Previsualización de Respuesta 4</h4>
-                    <MathJax>
-                      {newAnswers[3]}
-                    </MathJax>
-                  </div>
-                </div>
+              </div>
 
-                <div className='cp-select-container'> 
-                  <h3>Solución:</h3>
+              <div className='cp-select-container'>
 
-                  <select className='create-problem-select' name='solution' defaultValue={'default'} onChange={handleChange}>
-                    <option value={'default'} disabled>(Seleccione solución)</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                  </select>
-                </div>
-                
-                <button className='create-problem-submit-button'>Actualizar problema</button>
+                <h3>
+                  Nivel académico:
+                </h3>
+
+                <select
+                  className='create-problem-select'
+                  name='academicLevel'
+                  value={
+                    problem.academicLevel ||
+                    'default'
+                  }
+                  onChange={handleChange}
+                >
+
+                  <option
+                    value='default'
+                    disabled
+                  >
+                    (Seleccione nivel)
+                  </option>
+
+                  {
+                    academicLevels.map(
+                      (level) =>
+                      (
+                        <option
+                          key={level}
+                          value={level}
+                        >
+                          {
+                            getAcademicLevelLabel(
+                              level
+                            )
+                          }
+                        </option>
+                      )
+                    )
+                  }
+
+                </select>
+
+              </div>
+
             </div>
-        </form>    
-      </MathJaxContext>     
+
+            <h3>
+              Respuestas:
+            </h3>
+
+            {
+              problem.answers.map(
+                (answer, index) =>
+                (
+                  <div
+                    className='create-problem-answer-container'
+                    key={`answer-${index}`}
+                  >
+
+                    <textarea
+                      className='create-problem-answer'
+                      data-index={index}
+                      value={answer}
+                      onChange={
+                        handleAnswerChange
+                      }
+                      onFocus={
+                        () =>
+                          handleAnswerFocus(
+                            index
+                          )
+                      }
+                    />
+
+                    <div className='create-problem-answer-prev'>
+
+                      <h4 className='create-problem-answer-prev-title'>
+                        Previsualización de Respuesta {index + 1}
+                      </h4>
+
+                      <MathJax>
+                        {answer}
+                      </MathJax>
+
+                    </div>
+
+                  </div>
+                )
+              )
+            }
+
+            <div className='cp-select-container'>
+
+              <h3>
+                Solución:
+              </h3>
+
+              <select
+                className='create-problem-select'
+                name='solution'
+                value={
+                  problem.solution ||
+                  'default'
+                }
+                onChange={handleChange}
+              >
+
+                <option
+                  value='default'
+                  disabled
+                >
+                  (Seleccione solución)
+                </option>
+
+                <option value='1'>
+                  1
+                </option>
+
+                <option value='2'>
+                  2
+                </option>
+
+                <option value='3'>
+                  3
+                </option>
+
+                <option value='4'>
+                  4
+                </option>
+
+              </select>
+
+            </div>
+
+            <button
+              type='submit'
+              className='create-problem-submit-button'
+            >
+              Actualizar problema
+            </button>
+
+          </div>
+
+        </form>
+
+      </MathJaxContext>
+
     </div>
-  )
+  );
 }
 
 export default ProtectedRoute(EditProblem);
