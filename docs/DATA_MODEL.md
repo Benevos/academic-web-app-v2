@@ -142,7 +142,15 @@ The current implementation supports:
     "42",
     "43"
   ],
-  "solution": "2"
+  "solution": "3"
+    The `solution` field uses a one-based answer index:
+    
+    - `1` = first answer
+    - `2` = second answer
+    - `3` = third answer
+    - `4` = fourth answer
+    
+    For example, if `answers` is `["40", "41", "42", "43"]` and the correct answer is `42`, then `solution` must be `"3"`.
 }
 ```
 
