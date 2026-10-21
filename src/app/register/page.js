@@ -7,7 +7,10 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import NoAuthUserRoute from '@/components/NoAuthUserRoute';
 import Dialog from '@/components/Dialog';
-import { getCollection, registerUser } from '@/services/firebase';
+import {
+            getOneQueryCollection,
+            registerUser
+        } from '@/services/firebase';
 import FormTitle from '@/components/FormTitle';
 
 const initialUserData = {
@@ -155,11 +158,17 @@ function Register()
 
         try
         {
-            const institutions = await getCollection('institutions');
-
-            const duplicatedScholarKey = institutions.some(
-                (institution) => institution.scholarKey === scholarKey
-            );
+           const institutions =
+                    await getOneQueryCollection(
+                        'institutions',
+                        'scholarKey',
+                        '==',
+                        scholarKey
+                    );
+                
+                const duplicatedScholarKey =
+                    institutions.length > 0;
+                            );
 
             if(duplicatedScholarKey)
             {
