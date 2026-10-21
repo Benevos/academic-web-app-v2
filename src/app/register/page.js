@@ -1,17 +1,19 @@
 'use client';
 
+import React, { useState } from 'react';
+import Link from 'next/link';
+
 import Header from '@/components/PageTop/Header';
 import Navbar from '@/components/PageTop/Navbar';
 import TopFiller from '@/components/PageTop/TopFiller';
-import Link from 'next/link';
-import React, { useState } from 'react';
 import NoAuthUserRoute from '@/components/NoAuthUserRoute';
 import Dialog from '@/components/Dialog';
-import {
-            getOneQueryCollection,
-            registerUser
-        } from '@/services/firebase';
 import FormTitle from '@/components/FormTitle';
+
+import {
+    getOneQueryCollection,
+    registerUser
+} from '@/services/firebase';
 
 const initialUserData = {
     scholarKey: '',
@@ -19,7 +21,12 @@ const initialUserData = {
     password: '',
     confirmedPassword: '',
     institutionName: '',
-    academicLevel: [null, null, null, null]
+    academicLevel: [
+        null,
+        null,
+        null,
+        null
+    ]
 };
 
 const academicLevelIndexes = {
@@ -31,24 +38,29 @@ const academicLevelIndexes = {
 
 function Register()
 {
-    const [userData, setUserData] = useState(initialUserData);
+    const [userData, setUserData] =
+        useState(initialUserData);
 
-    const [dialogConfig, setDialogConfig] = useState({
-        title: '',
-        message: '',
-        showButton: true,
-        color: 'primary',
-        disabled: false
-    });
+    const [dialogConfig, setDialogConfig] =
+        useState({
+            title: '',
+            message: '',
+            showButton: true,
+            color: 'primary',
+            disabled: false
+        });
 
     const showDialog = (config) =>
     {
-        setDialogConfig((previousConfig) => ({
-            ...previousConfig,
-            ...config
-        }));
+        setDialogConfig(
+            (previousConfig) => ({
+                ...previousConfig,
+                ...config
+            })
+        );
 
-        const dialog = document.getElementById('dialog');
+        const dialog =
+            document.getElementById('dialog');
 
         if(dialog && !dialog.open)
         {
@@ -56,71 +68,96 @@ function Register()
         }
     };
 
-    const handleChange = ({ target: { name, value } }) =>
+    const handleChange = ({
+        target: {
+            name,
+            value
+        }
+    }) =>
     {
         const updatedValue =
             name === 'scholarKey'
                 ? value.toUpperCase()
                 : value;
 
-        setUserData((previousData) => ({
-            ...previousData,
-            [name]: updatedValue
-        }));
+        setUserData(
+            (previousData) => ({
+                ...previousData,
+                [name]: updatedValue
+            })
+        );
     };
 
-    const handleCheckboxChange = ({ target: { checked, value } }) =>
+    const handleCheckboxChange = ({
+        target: {
+            checked,
+            value
+        }
+    }) =>
     {
-        const index = academicLevelIndexes[value];
+        const index =
+            academicLevelIndexes[value];
 
         if(index === undefined)
         {
             return;
         }
 
-        setUserData((previousData) =>
-        {
-            const updatedLevels = [...previousData.academicLevel];
+        setUserData(
+            (previousData) =>
+            {
+                const updatedLevels = [
+                    ...previousData.academicLevel
+                ];
 
-            updatedLevels[index] = checked ? value : null;
+                updatedLevels[index] =
+                    checked
+                        ? value
+                        : null;
 
-            return {
-                ...previousData,
-                academicLevel: updatedLevels
-            };
-        });
+                return {
+                    ...previousData,
+                    academicLevel:
+                        updatedLevels
+                };
+            }
+        );
     };
 
-    const handleSubmit = async (e) =>
+    const handleSubmit = async (event) =>
     {
-        e.preventDefault();
+        event.preventDefault();
 
-        const {
-            scholarKey,
-            email,
-            password,
-            confirmedPassword,
-            institutionName,
-            academicLevel
-        } = userData;
+        const scholarKey =
+            userData.scholarKey.trim();
 
-        const requiredFields = [
-            scholarKey,
-            email,
-            password,
-            confirmedPassword,
-            institutionName
-        ];
+        const email =
+            userData.email.trim();
 
-        const hasEmptyFields = requiredFields.some(
-            (value) => value.trim() === ''
-        );
+        const institutionName =
+            userData.institutionName.trim();
 
-        if(hasEmptyFields)
+        const password =
+            userData.password;
+
+        const confirmedPassword =
+            userData.confirmedPassword;
+
+        const academicLevel =
+            userData.academicLevel;
+
+        if(
+            scholarKey === '' ||
+            email === '' ||
+            institutionName === '' ||
+            password.trim() === '' ||
+            confirmedPassword.trim() === ''
+        )
         {
             showDialog({
                 title: 'Error',
-                message: 'No deje campos vacíos',
+                message:
+                    'No deje campos vacíos',
                 color: 'error',
                 disabled: false
             });
@@ -128,15 +165,18 @@ function Register()
             return;
         }
 
-        const hasAcademicLevel = academicLevel.some(
-            (level) => level !== null
-        );
+        const hasAcademicLevel =
+            academicLevel.some(
+                (level) =>
+                    level !== null
+            );
 
         if(!hasAcademicLevel)
         {
             showDialog({
                 title: 'Error',
-                message: 'Seleccione al menos un nivel educativo',
+                message:
+                    'Seleccione al menos un nivel educativo',
                 color: 'error',
                 disabled: false
             });
@@ -144,11 +184,15 @@ function Register()
             return;
         }
 
-        if(password !== confirmedPassword)
+        if(
+            password !==
+            confirmedPassword
+        )
         {
             showDialog({
                 title: 'Error',
-                message: 'Las contraseñas no coinciden',
+                message:
+                    'Las contraseñas no coinciden',
                 color: 'error',
                 disabled: false
             });
@@ -158,23 +202,23 @@ function Register()
 
         try
         {
-           const institutions =
-                    await getOneQueryCollection(
-                        'institutions',
-                        'scholarKey',
-                        '==',
-                        scholarKey
-                    );
-                
-                const duplicatedScholarKey =
-                    institutions.length > 0;
-                            );
+            const institutions =
+                await getOneQueryCollection(
+                    'institutions',
+                    'scholarKey',
+                    '==',
+                    scholarKey
+                );
+
+            const duplicatedScholarKey =
+                institutions.length > 0;
 
             if(duplicatedScholarKey)
             {
                 showDialog({
                     title: 'Error',
-                    message: 'La clave escolar ya se encuentra registrada',
+                    message:
+                        'La clave escolar ya se encuentra registrada',
                     color: 'error',
                     disabled: false
                 });
@@ -184,7 +228,8 @@ function Register()
 
             showDialog({
                 title: 'Registrando',
-                message: 'Por favor, espere',
+                message:
+                    'Por favor, espere',
                 color: 'primary',
                 disabled: true
             });
@@ -198,17 +243,19 @@ function Register()
             );
 
             setUserData({
-                scholarKey: '',
-                email: '',
-                password: '',
-                confirmedPassword: '',
-                institutionName: '',
-                academicLevel: [null, null, null, null]
+                ...initialUserData,
+                academicLevel: [
+                    null,
+                    null,
+                    null,
+                    null
+                ]
             });
 
             setDialogConfig({
                 title: 'Éxito',
-                message: 'Usuario registrado con éxito',
+                message:
+                    'Usuario registrado con éxito',
                 showButton: true,
                 color: 'primary',
                 disabled: false
@@ -218,7 +265,8 @@ function Register()
         {
             showDialog({
                 title: 'Error',
-                message: error.message,
+                message:
+                    error.message,
                 color: 'error',
                 disabled: false
             });
@@ -229,11 +277,21 @@ function Register()
         <div>
 
             <Dialog
-                title={dialogConfig.title}
-                message={dialogConfig.message}
-                showButton={dialogConfig.showButton}
-                color={dialogConfig.color}
-                disabled={dialogConfig.disabled}
+                title={
+                    dialogConfig.title
+                }
+                message={
+                    dialogConfig.message
+                }
+                showButton={
+                    dialogConfig.showButton
+                }
+                color={
+                    dialogConfig.color
+                }
+                disabled={
+                    dialogConfig.disabled
+                }
             />
 
             <Header/>
@@ -247,71 +305,115 @@ function Register()
                     className='login-form'
                 >
 
-                    <FormTitle title='Registrarse'/>
+                    <FormTitle
+                        title='Registrarse'
+                    />
 
-                    <label>Clave escolar:</label>
+                    <label>
+                        Clave escolar:
+                    </label>
 
                     <input
                         className='login-text-input uppercase'
-                        onChange={handleChange}
-                        value={userData.scholarKey}
                         type='text'
                         name='scholarKey'
+                        value={
+                            userData.scholarKey
+                        }
+                        onChange={
+                            handleChange
+                        }
                         placeholder='Clave escolar'
+                        autoComplete='username'
                     />
 
-                    <label>Correo electrónico:</label>
+                    <label>
+                        Correo electrónico:
+                    </label>
 
                     <input
                         className='login-text-input'
-                        onChange={handleChange}
-                        value={userData.email}
                         type='email'
                         name='email'
+                        value={
+                            userData.email
+                        }
+                        onChange={
+                            handleChange
+                        }
                         placeholder='correo@dominio.com'
+                        autoComplete='email'
                     />
 
-                    <label>Nombre de institución:</label>
+                    <label>
+                        Nombre de institución:
+                    </label>
 
                     <input
                         className='login-text-input'
-                        onChange={handleChange}
-                        value={userData.institutionName}
                         type='text'
                         name='institutionName'
+                        value={
+                            userData.institutionName
+                        }
+                        onChange={
+                            handleChange
+                        }
                         placeholder='Nombre'
                     />
 
-                    <label>Contraseña:</label>
+                    <label>
+                        Contraseña:
+                    </label>
 
                     <input
                         className='login-text-input'
-                        onChange={handleChange}
-                        value={userData.password}
                         type='password'
                         name='password'
+                        value={
+                            userData.password
+                        }
+                        onChange={
+                            handleChange
+                        }
                         placeholder='Contraseña'
+                        autoComplete='new-password'
                     />
 
-                    <label>Confirmar contraseña:</label>
+                    <label>
+                        Confirmar contraseña:
+                    </label>
 
                     <input
                         className='login-text-input'
-                        onChange={handleChange}
-                        value={userData.confirmedPassword}
                         type='password'
                         name='confirmedPassword'
+                        value={
+                            userData.confirmedPassword
+                        }
+                        onChange={
+                            handleChange
+                        }
                         placeholder='Contraseña'
+                        autoComplete='new-password'
                     />
 
-                    <label>Nivel educativo:</label>
+                    <label>
+                        Nivel educativo:
+                    </label>
 
                     <div>
                         <input
                             type='checkbox'
-                            onChange={handleCheckboxChange}
-                            checked={userData.academicLevel.includes('college')}
                             value='college'
+                            checked={
+                                userData.academicLevel.includes(
+                                    'college'
+                                )
+                            }
+                            onChange={
+                                handleCheckboxChange
+                            }
                         />
 
                         {' '}
@@ -324,9 +426,15 @@ function Register()
                     <div>
                         <input
                             type='checkbox'
-                            onChange={handleCheckboxChange}
-                            checked={userData.academicLevel.includes('high')}
                             value='high'
+                            checked={
+                                userData.academicLevel.includes(
+                                    'high'
+                                )
+                            }
+                            onChange={
+                                handleCheckboxChange
+                            }
                         />
 
                         {' '}
@@ -339,9 +447,15 @@ function Register()
                     <div>
                         <input
                             type='checkbox'
-                            onChange={handleCheckboxChange}
-                            checked={userData.academicLevel.includes('middle')}
                             value='middle'
+                            checked={
+                                userData.academicLevel.includes(
+                                    'middle'
+                                )
+                            }
+                            onChange={
+                                handleCheckboxChange
+                            }
                         />
 
                         {' '}
@@ -354,9 +468,15 @@ function Register()
                     <div>
                         <input
                             type='checkbox'
-                            onChange={handleCheckboxChange}
-                            checked={userData.academicLevel.includes('elementary')}
                             value='elementary'
+                            checked={
+                                userData.academicLevel.includes(
+                                    'elementary'
+                                )
+                            }
+                            onChange={
+                                handleCheckboxChange
+                            }
                         />
 
                         {' '}
