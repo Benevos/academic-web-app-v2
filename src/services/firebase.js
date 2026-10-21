@@ -68,28 +68,6 @@ const mapDocuments = (snapshot) =>
     );
 };
 
-
-/*
- * Retrieve every document in a collection.
- *
- * This helper is retained because some current
- * Calcula UAT workflows still use it.
- */
-export const getCollection =
-    async (collectionName) =>
-{
-    const snapshot =
-        await getDocs(
-            collection(
-                db,
-                collectionName
-            )
-        );
-
-    return mapDocuments(snapshot);
-};
-
-
 /*
  * Retrieve one document by Firestore document ID.
  *
